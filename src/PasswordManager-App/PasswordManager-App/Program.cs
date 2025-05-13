@@ -1,12 +1,11 @@
-﻿using System;
+﻿///ETML
+///Author : Sarah Dongmo
+///Creation date : 12.05.25
+///Last modification : 
+///Description : application's entry point.
+
+using System;
 using System.Windows.Forms;
-
-
-///ETML
-///Author: Sarah Dongmo
-///Creation date: 12.05.25
-///Last modification: 
-///Description : application's entry point
 
 namespace PasswordManager_App
 {
@@ -27,25 +26,25 @@ namespace PasswordManager_App
             Controller controller = new Controller(model, home);
 
             //Initialization of all the page
-            PasswordBackupPage passwordBackupPage = new PasswordBackupPage();
+            PasswordBackupPage passwordBackup = new PasswordBackupPage();
             PasswordGenerationPage passwordGeneration = new PasswordGenerationPage();
             PasswordVaultPage passwordVault = new PasswordVaultPage();
             UserCreationPage userCreation = new UserCreationPage();
 
             //Controller's initialization of all page depending on it
             home.Controller = controller;
-            passwordBackupPage.Controller = controller;
+            passwordBackup.Controller = controller;
             passwordGeneration.Controller = controller;
             passwordVault.Controller = controller;
             userCreation.Controller = controller;
 
             //Initialization of classes in Controller.cs 
-            controller.PasswordBackupPage = tasksTodo;
-            controller.PasswordGenerationPage = addTask;
-            controller.PasswordVaultPage = tasksDone;
+            controller.PasswordBackupPage = passwordBackup;
+            controller.PasswordGenerationPage = passwordGeneration;
+            controller.PasswordVaultPage = passwordVault;
             controller.UserCreationPage = userCreation;
 
-            Application.Run(new HomePage());
+            Application.Run(userCreation);
         }
     }
 }

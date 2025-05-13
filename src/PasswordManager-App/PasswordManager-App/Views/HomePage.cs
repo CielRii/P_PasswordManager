@@ -20,7 +20,30 @@ namespace PasswordManager_App
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void HomePage_Load(object sender, EventArgs e)
+        {
+            Controller.ShareAppID(); //Share of app identity 
+        }
+
+        private void createAccountLbl_Click(object sender, EventArgs e)
+        {
+            Controller.Redirection("UserCreationPage"); //Redirection to create an user
+            Hide();
+        }
+
+        private void connexionBtn_Click(object sender, EventArgs e)
+        {
+            Controller.CheckLogin(userNameInsert.Text, passwordInsert.Text);
+            Controller.Redirection("PasswordGenerationPage"); //Redirection to access the app
+            Hide();
+        }
+
+        private void createAccountRedirection_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void helpBtn_Click(object sender, EventArgs e)
         {
 
         }

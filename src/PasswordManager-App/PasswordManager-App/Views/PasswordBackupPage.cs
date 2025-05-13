@@ -12,6 +12,12 @@ namespace PasswordManager_App
 {
     public partial class PasswordBackupPage : Form
     {
+        // Reference to the controller
+        public Controller Controller { get; set; }
 
+        public PasswordBackupPage()
+        {
+            InitializeComponent();
+        }
     }
 }
