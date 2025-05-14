@@ -45,7 +45,7 @@ namespace PasswordManager_App
 
         private void helpBtn_Click(object sender, EventArgs e)
         {
-
+            Controller.HelpMessage(0);
         }
     }
 }

@@ -5,18 +5,18 @@ CREATE DATABASE IF NOT EXISTS setup_database;
 USE setup_database;
 
 -- User table creation
-CREATE TABLE IF NOT EXISTS USER_(
+CREATE TABLE IF NOT EXISTS t_user(
    user_id INT AUTO_INCREMENT,
    username VARCHAR(50) NOT NULL,
    masterPassword VARCHAR(72) NOT NULL,
-   salt VARCHAR(20) NOT NULL,
+   salt VARCHAR(20),
    administrator BOOLEAN NOT NULL,
    PRIMARY KEY(user_id),
    UNIQUE(username)
 );
 
 -- Website table creation
-CREATE TABLE IF NOT EXISTS WEBSITE(
+CREATE TABLE IF NOT EXISTS t_website(
    task_id INT AUTO_INCREMENT,
    name VARCHAR(50) NOT NULL,
    username VARCHAR(50) NOT NULL,
@@ -30,6 +30,6 @@ CREATE TABLE IF NOT EXISTS manage(
    user_id INT,
    task_id INT,
    PRIMARY KEY(user_id, task_id),
-   FOREIGN KEY(user_id) REFERENCES USER_(user_id),
-   FOREIGN KEY(task_id) REFERENCES WEBSITE(task_id)
+   FOREIGN KEY(user_id) REFERENCES t_user(user_id),
+   FOREIGN KEY(task_id) REFERENCES t_website(task_id)
 );

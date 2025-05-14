@@ -20,14 +20,24 @@ namespace PasswordManager_App
             InitializeComponent();
         }
 
+        private void helpBtn_Click(object sender, EventArgs e)
+        {
+            Controller.HelpMessage(1);
+        }
+
         private void logInRedirection_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void helpBtn_Click(object sender, EventArgs e)
+        private void createAccountBtn_Click(object sender, EventArgs e)
         {
+            if (Controller.CheckUserAvaible(newUserNameInsert.Text))
+                Controller.CheckPassword(newUserPasswordInsert.Text, newUserConfirmPasswordInsert.Text);
+            else
+                MessageBox.Show("Ce nom d'utilisateur n'est pas disponible, veuillez choisir un autre.");
 
+            Hide();
         }
     }
 }

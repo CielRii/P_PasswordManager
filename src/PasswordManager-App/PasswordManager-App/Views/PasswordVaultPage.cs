@@ -19,5 +19,19 @@ namespace PasswordManager_App
         {
             InitializeComponent();
         }
+        private void PasswordVaultPage_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void optionsBtn_Click(object sender, EventArgs e)
+        {
+            Controller.MenuData();
+        }
+
+        private void helpBtn_Click(object sender, EventArgs e)
+        {
+            Controller.HelpMessage(4);
+        }
     }
 }

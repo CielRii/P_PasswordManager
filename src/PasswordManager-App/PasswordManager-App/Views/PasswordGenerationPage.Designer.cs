@@ -34,15 +34,20 @@
             this.passwordGenerationBtn = new System.Windows.Forms.Button();
             this.passwordInsert = new System.Windows.Forms.TextBox();
             this.passwordLbl = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.passwordGenerationTitle = new System.Windows.Forms.Label();
             this.capitalLetterOption = new System.Windows.Forms.CheckBox();
             this.numberOption = new System.Windows.Forms.CheckBox();
             this.passwordStrengthOption = new System.Windows.Forms.CheckBox();
             this.specialCharacterOption = new System.Windows.Forms.CheckBox();
             this.nbOfCharactersLbl = new System.Windows.Forms.Label();
             this.nbOfCharactersInsert = new System.Windows.Forms.TextBox();
+            this.passwordStrengthLbl = new System.Windows.Forms.Label();
+            this.passwordStrengthPic = new System.Windows.Forms.PictureBox();
+            this.passwordStrengthCursor = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.helpBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.optionsBtn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.passwordStrengthPic)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.passwordStrengthCursor)).BeginInit();
             this.SuspendLayout();
             // 
             // helpBtn
@@ -93,15 +98,15 @@
             this.passwordLbl.TabIndex = 17;
             this.passwordLbl.Text = "Mot de passe :";
             // 
-            // label6
+            // passwordGenerationTitle
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(186, 87);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(292, 25);
-            this.label6.TabIndex = 22;
-            this.label6.Text = "Générer un mot de passe fort";
+            this.passwordGenerationTitle.AutoSize = true;
+            this.passwordGenerationTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.passwordGenerationTitle.Location = new System.Drawing.Point(186, 87);
+            this.passwordGenerationTitle.Name = "passwordGenerationTitle";
+            this.passwordGenerationTitle.Size = new System.Drawing.Size(292, 25);
+            this.passwordGenerationTitle.TabIndex = 22;
+            this.passwordGenerationTitle.Text = "Générer un mot de passe fort";
             // 
             // capitalLetterOption
             // 
@@ -163,18 +168,54 @@
             this.nbOfCharactersInsert.Size = new System.Drawing.Size(43, 20);
             this.nbOfCharactersInsert.TabIndex = 28;
             // 
+            // passwordStrengthLbl
+            // 
+            this.passwordStrengthLbl.AutoSize = true;
+            this.passwordStrengthLbl.Location = new System.Drawing.Point(128, 291);
+            this.passwordStrengthLbl.Name = "passwordStrengthLbl";
+            this.passwordStrengthLbl.Size = new System.Drawing.Size(121, 13);
+            this.passwordStrengthLbl.TabIndex = 30;
+            this.passwordStrengthLbl.Text = "Force du mot de passe :";
+            this.passwordStrengthLbl.Visible = false;
+            // 
+            // passwordStrengthPic
+            // 
+            this.passwordStrengthPic.Image = ((System.Drawing.Image)(resources.GetObject("passwordStrengthPic.Image")));
+            this.passwordStrengthPic.Location = new System.Drawing.Point(269, 280);
+            this.passwordStrengthPic.Name = "passwordStrengthPic";
+            this.passwordStrengthPic.Size = new System.Drawing.Size(181, 41);
+            this.passwordStrengthPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.passwordStrengthPic.TabIndex = 31;
+            this.passwordStrengthPic.TabStop = false;
+            this.passwordStrengthPic.Visible = false;
+            // 
+            // passwordStrengthCursor
+            // 
+            this.passwordStrengthCursor.BackColor = System.Drawing.Color.Transparent;
+            this.passwordStrengthCursor.Image = ((System.Drawing.Image)(resources.GetObject("passwordStrengthCursor.Image")));
+            this.passwordStrengthCursor.Location = new System.Drawing.Point(430, 291);
+            this.passwordStrengthCursor.Name = "passwordStrengthCursor";
+            this.passwordStrengthCursor.Size = new System.Drawing.Size(20, 21);
+            this.passwordStrengthCursor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.passwordStrengthCursor.TabIndex = 32;
+            this.passwordStrengthCursor.TabStop = false;
+            this.passwordStrengthCursor.Visible = false;
+            // 
             // PasswordGenerationPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(670, 461);
+            this.Controls.Add(this.passwordStrengthCursor);
+            this.Controls.Add(this.passwordStrengthPic);
+            this.Controls.Add(this.passwordStrengthLbl);
             this.Controls.Add(this.nbOfCharactersLbl);
             this.Controls.Add(this.nbOfCharactersInsert);
             this.Controls.Add(this.specialCharacterOption);
             this.Controls.Add(this.passwordStrengthOption);
             this.Controls.Add(this.numberOption);
             this.Controls.Add(this.capitalLetterOption);
-            this.Controls.Add(this.label6);
+            this.Controls.Add(this.passwordGenerationTitle);
             this.Controls.Add(this.passwordLbl);
             this.Controls.Add(this.passwordInsert);
             this.Controls.Add(this.passwordGenerationBtn);
@@ -184,6 +225,8 @@
             this.Text = "Form3";
             ((System.ComponentModel.ISupportInitialize)(this.helpBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.optionsBtn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.passwordStrengthPic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.passwordStrengthCursor)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -196,12 +239,15 @@
         private System.Windows.Forms.Button passwordGenerationBtn;
         private System.Windows.Forms.TextBox passwordInsert;
         private System.Windows.Forms.Label passwordLbl;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label passwordGenerationTitle;
         private System.Windows.Forms.CheckBox capitalLetterOption;
         private System.Windows.Forms.CheckBox numberOption;
         private System.Windows.Forms.CheckBox passwordStrengthOption;
         private System.Windows.Forms.CheckBox specialCharacterOption;
         private System.Windows.Forms.Label nbOfCharactersLbl;
         private System.Windows.Forms.TextBox nbOfCharactersInsert;
+        public System.Windows.Forms.Label passwordStrengthLbl;
+        public System.Windows.Forms.PictureBox passwordStrengthPic;
+        public System.Windows.Forms.PictureBox passwordStrengthCursor;
     }
 }

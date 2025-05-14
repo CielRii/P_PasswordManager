@@ -22,19 +22,19 @@ namespace PasswordManager_App
 
         private void optionsBtn_Click(object sender, EventArgs e)
         {
-
+            Controller.MenuData();
         }
 
         private void helpBtn_Click(object sender, EventArgs e)
         {
-
+            Controller.HelpMessage(2);
         }
 
         private void passwordGenerationBtn_Click(object sender, EventArgs e)
         {
-            Controller.GeneratePassword(Convert.ToInt32(nbOfCharactersInsert.Text), numberOption.Checked, capitalLetterOption.Checked,
-            specialCharacterOption.Checked);
-            Controller.CheckPasswordStrength(passwordStrengthOption.Checked);
+            passwordInsert.AppendText(Controller.GeneratePassword(Convert.ToInt32(nbOfCharactersInsert.Text), numberOption.Checked, capitalLetterOption.Checked,
+            specialCharacterOption.Checked)); //Display of the generated password
+            Controller.CheckPasswordStrength(passwordStrengthOption.Checked); //Check
         }
     }
 }

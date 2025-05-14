@@ -118,6 +118,7 @@
             this.createAccountBtn.TabIndex = 20;
             this.createAccountBtn.Text = "Créer un compte";
             this.createAccountBtn.UseVisualStyleBackColor = true;
+            this.createAccountBtn.Click += new System.EventHandler(this.createAccountBtn_Click);
             // 
             // helpBtn
             // 
