@@ -21,7 +21,7 @@ namespace PasswordManager_App
         }
         private void PasswordVaultPage_Load(object sender, EventArgs e)
         {
-
+            Controller.DisplayPasswordData();
         }
 
         private void optionsBtn_Click(object sender, EventArgs e)

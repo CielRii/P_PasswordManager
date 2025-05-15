@@ -26,10 +26,12 @@ namespace PasswordManager_App
         private string username;
         private byte[] salt;
 
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string City { get; set; }
-
+        public class WebSite
+        {
+            public string Name { get; set; }
+            public string Username { get; set; }
+            public string Password { get; set; }
+        }
 
         private List<string> helpMessage = new List<string>()
         {
@@ -86,7 +88,7 @@ namespace PasswordManager_App
                 case "UserCreationPage":
                     UserCreationPage.Show();
                     break;
-                default: 
+                default:
                     _home.Show();
                     break;
             }
@@ -101,13 +103,12 @@ namespace PasswordManager_App
         public void MenuData()
         {
             ListView optionsMenu = new ListView();
-            optionsMenu.Location = new System.Drawing.Point(12, 12);
+            optionsMenu.Location = new Point(12, 12);
             optionsMenu.Name = "optionsMenu";
-            optionsMenu.Size = new System.Drawing.Size(245, 200);
-            optionsMenu.BackColor = System.Drawing.Color.AntiqueWhite;
-            optionsMenu.ForeColor = System.Drawing.Color.BurlyWood;
-            Controls.Add(optionsMenu);
-
+            optionsMenu.Size = new Size(245, 200);
+            optionsMenu.BackColor = Color.AntiqueWhite;
+            optionsMenu.ForeColor = Color.BurlyWood;
+            //Controls.Add(optionsMenu);
         }
 
         // Check login data
@@ -231,7 +232,7 @@ namespace PasswordManager_App
         public void CheckPasswordStrength(bool passwordStrength)
         {
             // Display of options
-            if (passwordStrength) 
+            if (passwordStrength)
             {
                 PasswordGenerationPage.passwordStrengthLbl.Visible = true;
                 PasswordGenerationPage.passwordStrengthPic.Visible = true;
@@ -240,39 +241,41 @@ namespace PasswordManager_App
             //PasswordGenerationPage.passwordStrengthCursor.Position(x, y);
         }
 
-        public Emp(int id, string name, string city)
+        // To backup passwords and data related to them
+        public void PasswordBackup(string username, string password, string website)
         {
-            this.ID = id;
-            this.Name = name;
-            this.City = city;
+            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password) && !string.IsNullOrEmpty(website))
+            {
+                _model.AddPassword(username, password, website);
+            }
         }
 
-        public void DisplayPasswords()
+        public void DisplayPasswordData()
         {
-            List<Emp> lEmp = new List<Emp>();
-            Emp oemp = new Emp(1234, "Devesh Omar", "GZB");
-            lEmp.Add(oemp);
-            oemp = new Emp(1234, "ROLI", "GZB");
-            lEmp.Add(oemp);
-            oemp = new Emp(1235, "ROLI", "MainPuri");
-            lEmp.Add(oemp);
-            oemp = new Emp(1236, "ROLI", "Kanpur");
-            lEmp.Add(oemp);
-            oemp = new Emp(1237, "Manish Omar", "GZB");
-            lEmp.Add(oemp);
-            oemp = new Emp(1238, "ROLI1", "MainPuri");
-            lEmp.Add(oemp);
-            oemp = new Emp(1239, "ROLI2", "MainPuri");
-            lEmp.Add(oemp);
-            oemp = new Emp(1230, "ROLI3", "CNB");
-            lEmp.Add(oemp);
-            oemp = new Emp(1231, "ROLI4", "CNB-UP");
-            lEmp.Add(oemp);
-            oemp = new Emp(1232, "ROLI5", "GHAZIABAD");
-            lEmp.Add(oemp);
-            oemp = new Emp(1233, "ROLI6", "UP");
-            lEmp.Add(oemp);
-            return lEmp;
+            List<WebSite> webSites = new List<WebSite>();
+            string [] data = _model.DisplayPasswordData();
+            int x = _model.NumberOfData();
+
+            for (int i = 0; i < 6; i++)
+            {
+                webSites.Add(new WebSite //
+                {
+                    Name = data[i],
+                    Username = data[i + 1],
+                    Password = data[i + 2]
+                });
+                i += 2; //Increment of two as 2 other columns are filled
+            }
+
+            DataGridView dataGridView = new DataGridView();
+            dataGridView.Dock = DockStyle.Fill;
+            PasswordVaultPage.Controls.Add(dataGridView); //Add of the array on the "PasswordVaultPage"
+            dataGridView.DataSource = webSites;
+
+            // Customized headers
+            dataGridView.Columns["Name"].HeaderText = "Site";
+            dataGridView.Columns["Username"].HeaderText = "Nom d'utilisateur";
+            dataGridView.Columns["Password"].HeaderText = "Mot de passe";
         }
     }
 }

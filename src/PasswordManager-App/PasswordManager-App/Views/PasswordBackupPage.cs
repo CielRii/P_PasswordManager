@@ -19,5 +19,20 @@ namespace PasswordManager_App
         {
             InitializeComponent();
         }
+
+        private void optionsBtn_Click(object sender, EventArgs e)
+        {
+            Controller.MenuData();
+        }
+
+        private void helpBtn_Click(object sender, EventArgs e)
+        {
+            Controller.HelpMessage(3);
+        }
+
+        private void passwordBackupBtn_Click(object sender, EventArgs e)
+        {
+            Controller.PasswordBackup(userNameInsert.Text, userPasswordInsert.Text, webSiteInsert.Text);
+        }
     }
 }

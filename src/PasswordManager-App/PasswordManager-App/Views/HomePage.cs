@@ -25,6 +25,11 @@ namespace PasswordManager_App
             Controller.ShareAppID(); //Share of app identity 
         }
 
+        private void helpBtn_Click(object sender, EventArgs e)
+        {
+            Controller.HelpMessage(0);
+        }
+
         private void createAccountLbl_Click(object sender, EventArgs e)
         {
             Controller.Redirection("UserCreationPage"); //Redirection to create an user
@@ -41,11 +46,6 @@ namespace PasswordManager_App
         private void createAccountRedirection_Click(object sender, EventArgs e)
         {
 
-        }
-
-        private void helpBtn_Click(object sender, EventArgs e)
-        {
-            Controller.HelpMessage(0);
         }
     }
 }

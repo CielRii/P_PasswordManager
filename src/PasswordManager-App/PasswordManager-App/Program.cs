@@ -44,7 +44,7 @@ namespace PasswordManager_App
             controller.PasswordVaultPage = passwordVault;
             controller.UserCreationPage = userCreation;
 
-            Application.Run(userCreation);
+            Application.Run(passwordGeneration);
         }
     }
 }
