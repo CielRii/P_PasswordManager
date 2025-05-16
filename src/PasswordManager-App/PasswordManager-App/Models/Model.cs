@@ -24,10 +24,10 @@ namespace PasswordManager_App
         private int userID;
         public byte[] salt;
 
-        private string dataQuery = "SELECT w.name, w.username, w.password " +
-                "FROM `t_website` w JOIN `manage` m ON w.task_id = m.task_id " +
-                "JOIN `t_user` u ON u.user_id = m.user_id " +
-                "WHERE u.user_id =  @userID; ";
+        //private string dataQuery = "SELECT w.name, w.username, w.password " +
+        //        "FROM `t_website` w JOIN `manage` m ON w.website_id = m.website_id " +
+        //        "JOIN `t_user` u ON u.user_id = m.user_id " +
+        //        "WHERE u.user_id =  @userID; ";
 
 
         // Connection to the database
@@ -139,42 +139,6 @@ namespace PasswordManager_App
             return true;
         }
 
-        public List<string> DisplayTasks(int userID, bool done)
-        {
-            this.userID = userID;
-            List<string> tasks = new List<string>();
-            if (!IsConnect()) return null;
-
-            string query = "SELECT * FROM `t_website` t INNER JOIN `t_user` u ON t.user_id = u.user_id " +
-               "WHERE u.user_id = @userID && t.done = @done ;";
-
-            cmd = new MySqlCommand(query, Connection);
-            cmd.Parameters.AddWithValue("@userID", userID);
-            cmd.Parameters.AddWithValue("@done", done);
-            dataReader = cmd.ExecuteReader();
-            while (dataReader.Read())
-            {
-                tasks.Add(dataReader.GetString(0));
-            }
-            dataReader.Close();
-            return tasks;
-        }
-
-        public bool AddTask(string name)
-        {
-            if (!IsConnect()) return false;
-
-            string query = "INSERT INTO `t_website`(task_id, name, user_id, done)" +
-                "VALUES (NULL, @name, @userID, 0);";
-            cmd = new MySqlCommand(query, Connection);
-            cmd.Parameters.AddWithValue("@name", name);
-            cmd.Parameters.AddWithValue("@userID", userID);
-            cmd.Prepare();
-            cmd.ExecuteNonQuery();
-            DisplayTasks(userID, false);
-            return true;
-        }
-
         // Add passwords and data related to them
         public bool AddPassword(string username, string password, string website)
         {
@@ -185,8 +149,8 @@ namespace PasswordManager_App
             cmd = new MySqlCommand(query, Connection);
             cmd.Parameters.AddWithValue("@username", username);
             cmd.Parameters.AddWithValue("@password", password);
-            cmd.Parameters.AddWithValue("@website", website);
-            cmd.Prepare();
+            cmd.Parameters.AddWithValue("@name", website);
+            cmd.Prepare(); //
             cmd.ExecuteNonQuery();
             return true;
         }
@@ -196,12 +160,12 @@ namespace PasswordManager_App
             if (!IsConnect()) return 0;
 
             string query = "SELECT COUNT(*) FROM(SELECT w.name, w.username, w.password " +
-                "FROM `t_website` w JOIN `manage` m ON w.task_id = m.task_id JOIN `t_user` u ON u.user_id = m.user_id " +
+                "FROM `t_website` w JOIN `manage` m ON w.website_id = m.website_id JOIN `t_user` u ON u.user_id = m.user_id " +
                 "WHERE u.user_id =  @userID) AS subquery;";
             int nb = 0;
             cmd = new MySqlCommand(query, Connection);
             cmd.Parameters.AddWithValue("@userID", 1);
-            dataReader = cmd.ExecuteReader();
+            dataReader = cmd.ExecuteReader(); //
             while (dataReader.Read())
             {
                 nb = dataReader.GetInt32(0);
@@ -216,7 +180,7 @@ namespace PasswordManager_App
             if (!IsConnect()) return null;
 
             string query = "SELECT w.name, w.username, w.password " +
-                "FROM `t_website` w JOIN `manage` m ON w.task_id = m.task_id " +
+                "FROM `t_website` w JOIN `manage` m ON w.website_id = m.website_id " +
                 "JOIN `t_user` u ON u.user_id = m.user_id " +
                 "WHERE u.user_id =  @userID; ";
 
@@ -239,7 +203,8 @@ namespace PasswordManager_App
             return webSites;
         }
 
-        public bool EditTask(string newName, string previousName, string username, string password)
+        // Edition of registered password data
+        public bool EditPasswordData(string newName, string previousName, string username, string password)
         {
             if (!IsConnect()) return false;
 
@@ -248,14 +213,15 @@ namespace PasswordManager_App
             cmd = new MySqlCommand(query, Connection);
             cmd.Parameters.AddWithValue("@newName", newName);
             cmd.Parameters.AddWithValue("@previousName", previousName);
-            cmd.Parameters.AddWithValue("@newName", username);
-            cmd.Parameters.AddWithValue("@previousName", password);
+            cmd.Parameters.AddWithValue("@username", username);
+            cmd.Parameters.AddWithValue("@password", password);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
             return true;
         }
 
-        public bool EraseTask(string name)
+        // Deletion of registered password data
+        public bool ErasePasswordData(string name)
         {
             if (!IsConnect()) return false;
 

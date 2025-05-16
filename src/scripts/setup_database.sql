@@ -17,19 +17,19 @@ CREATE TABLE IF NOT EXISTS t_user(
 
 -- Website table creation
 CREATE TABLE IF NOT EXISTS t_website(
-   task_id INT AUTO_INCREMENT,
+   website_id INT AUTO_INCREMENT,
    name VARCHAR(50) NOT NULL,
    username VARCHAR(50) NOT NULL,
    password VARCHAR(50) NOT NULL,
-   PRIMARY KEY(task_id),
+   PRIMARY KEY(website_id),
    UNIQUE(password)
 );
 
 -- Manage table creation
 CREATE TABLE IF NOT EXISTS manage(
    user_id INT,
-   task_id INT,
-   PRIMARY KEY(user_id, task_id),
+   website_id INT,
+   PRIMARY KEY(user_id, website_id),
    FOREIGN KEY(user_id) REFERENCES t_user(user_id),
-   FOREIGN KEY(task_id) REFERENCES t_website(task_id)
+   FOREIGN KEY(website_id) REFERENCES t_website(website_id)
 );

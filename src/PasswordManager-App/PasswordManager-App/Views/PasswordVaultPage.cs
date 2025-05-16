@@ -19,9 +19,11 @@ namespace PasswordManager_App
         {
             InitializeComponent();
         }
+
         private void PasswordVaultPage_Load(object sender, EventArgs e)
         {
             Controller.DisplayPasswordData();
+            Controller.DisplayButtons();
         }
 
         private void optionsBtn_Click(object sender, EventArgs e)
@@ -32,6 +34,22 @@ namespace PasswordManager_App
         private void helpBtn_Click(object sender, EventArgs e)
         {
             Controller.HelpMessage(4);
+        }
+
+        public void showPasswordDataBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        public void updateBtn_Click(object sender, EventArgs e)
+        {
+            Controller.EditPasswordData();
+            //(string newName, string previousName, string username, string password)
+        }
+
+        public void deleteBtn_Click(object sender, EventArgs e)
+        {
+            //Controller.ErasePasswordData();
         }
     }
 }

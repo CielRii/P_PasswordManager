@@ -30,12 +30,6 @@ namespace PasswordManager_App
             Controller.HelpMessage(0);
         }
 
-        private void createAccountLbl_Click(object sender, EventArgs e)
-        {
-            Controller.Redirection("UserCreationPage"); //Redirection to create an user
-            Hide();
-        }
-
         private void connexionBtn_Click(object sender, EventArgs e)
         {
             Controller.CheckLogin(userNameInsert.Text, passwordInsert.Text);
@@ -45,7 +39,8 @@ namespace PasswordManager_App
 
         private void createAccountRedirection_Click(object sender, EventArgs e)
         {
-
+            Controller.Redirection("UserCreationPage"); //Redirection to create an user
+            Hide();
         }
     }
 }

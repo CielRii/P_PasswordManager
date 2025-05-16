@@ -33,6 +33,7 @@ namespace PasswordManager_App
         private void passwordBackupBtn_Click(object sender, EventArgs e)
         {
             Controller.PasswordBackup(userNameInsert.Text, userPasswordInsert.Text, webSiteInsert.Text);
+            Controller.EmptyUserInsert(userNameInsert, userPasswordInsert, webSiteInsert);
         }
     }
 }

@@ -25,11 +25,6 @@ namespace PasswordManager_App
             Controller.HelpMessage(1);
         }
 
-        private void logInRedirection_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void createAccountBtn_Click(object sender, EventArgs e)
         {
             if (Controller.CheckUserAvaible(newUserNameInsert.Text))
@@ -37,6 +32,12 @@ namespace PasswordManager_App
             else
                 MessageBox.Show("Ce nom d'utilisateur n'est pas disponible, veuillez choisir un autre.");
 
+            Hide();
+        }
+
+        private void logInRedirection_Click(object sender, EventArgs e)
+        {
+            Controller.Redirection();
             Hide();
         }
     }

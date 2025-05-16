@@ -25,13 +25,19 @@ namespace PasswordManager_App
         // To save new user username after checking avaibility
         private string username;
         private byte[] salt;
+        private int nbData;
+        private Button btn;
+        private int index;
+        private int x = 135;
+        private int y = 468;
 
-        public class WebSite
-        {
-            public string Name { get; set; }
-            public string Username { get; set; }
-            public string Password { get; set; }
-        }
+        private Label taskLbl;
+        private TextBox taskTodoTxt;
+        private Panel tasksPnl;
+        private string previousName;
+        private string previousUsername;
+        private string previousPassword;
+        private string newName;
 
         private List<string> helpMessage = new List<string>()
         {
@@ -41,6 +47,13 @@ namespace PasswordManager_App
              "Sur cette page, vous pouvez enregistrer vos données d'identification des différents comptes créés en ligne ou via des applications.",
              "Grâce à cette page, vous pouvez consulter et modifier vos données d'identification enregistrées. Pour que votre mot de passe, soit affiché en clair, vous pouvez cliquer sur le bouton «Afficher», et le re-masquer en passant par ce même bouton."
         };
+
+        public class WebSite
+        {
+            public string Name { get; set; }
+            public string Username { get; set; }
+            public string Password { get; set; }
+        }
 
         public Controller(Model model, HomePage home)
         {
@@ -56,6 +69,18 @@ namespace PasswordManager_App
         public PasswordGenerationPage PasswordGenerationPage { get; set; }
         public PasswordVaultPage PasswordVaultPage { get; set; }
         public UserCreationPage UserCreationPage { get; set; }
+
+        // Event methods
+        private EventHandler showPasswordDataBtn_Click { get; set; }
+        private EventHandler updateBtn_Click { get; set; }
+        private EventHandler deleteBtn_Click { get; set; }
+
+        public void AssignPasswordVaultEvents(EventHandler showPasswordDataBtn, EventHandler updateBtn, EventHandler deleteBtn)
+        {
+            showPasswordDataBtn_Click = showPasswordDataBtn;
+            updateBtn_Click = updateBtn;
+            deleteBtn_Click = deleteBtn;
+        }
 
         // Share of app identity through all app pages
         public void ShareAppID()
@@ -190,18 +215,16 @@ namespace PasswordManager_App
             Regex digit = new Regex("([0-9])");
             Regex specials = new Regex("([-/#~%*!?])");
 
-            if (password.Length >= 8 && upperCase.Matches(password).Count >= 1 && lowerCase.Matches(password).Count >= 1 &&
+            if (password.Length >= 14 && upperCase.Matches(password).Count >= 1 && lowerCase.Matches(password).Count >= 1 &&
                 digit.Matches(password).Count >= 1 && specials.Matches(password).Count >= 1) // Controls the password is enough secure
             {
                 if (password == confirmPassword)
-                { _model.CreateUser(username, HashPassword(password, false), salt); Redirection("TasksTodoPage"); } //
+                { _model.CreateUser(username, HashPassword(password, false), salt); Redirection("PasswordBackupPage"); } //
                 else
                 { MessageBox.Show("Vos deux entrées de mots de passe ne se correpondent pas."); }
             }
             else
             {
-                MessageBox.Show($"Upper: {upperCase.Matches(password).Count}, Lower: {lowerCase.Matches(password).Count}, Digit: {digit.Matches(password).Count}, Special: {specials.Matches(password).Count}");
-
                 MessageBox.Show("Votre mot de passe n'est pas conforme. Il doit contenir au moins 8 caractères, un chiffre, " +
                 "un lettre majuscule, une lettre miniscule et un caractère spécial.");
             }
@@ -250,13 +273,22 @@ namespace PasswordManager_App
             }
         }
 
+        // Textboxes cleared
+        public void EmptyUserInsert(TextBox username, TextBox password, TextBox website)
+        {
+            username.Text = null;
+            password.Text = null;
+            website.Text = null;
+        }
+
+        // Display password data registered
         public void DisplayPasswordData()
         {
             List<WebSite> webSites = new List<WebSite>();
             string [] data = _model.DisplayPasswordData();
-            int x = _model.NumberOfData();
+            nbData = _model.NumberOfData();
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < nbData; i++)
             {
                 webSites.Add(new WebSite //
                 {
@@ -276,6 +308,85 @@ namespace PasswordManager_App
             dataGridView.Columns["Name"].HeaderText = "Site";
             dataGridView.Columns["Username"].HeaderText = "Nom d'utilisateur";
             dataGridView.Columns["Password"].HeaderText = "Mot de passe";
+        }
+
+        // Display
+        public void DisplayButtons()
+        {
+            index = 0;
+            for (int i = 0; i < nbData/3; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    btn = new Button();
+                    //btn.BackColor = randomSolution[m];
+                    btn.FlatStyle = FlatStyle.Popup;
+                    if (j == 0)
+                    {
+                        btn.Name = "showPassword" + "Btn" + index;
+                        btn.Text = "Afficher";
+                        btn.Click += new EventHandler(showPasswordDataBtn_Click);
+                    }
+                    else
+                    {
+                        btn.Name =  "updateData" + "Btn" + index;
+                        btn.Text = "Update";
+                        btn.Click += new EventHandler(updateBtn_Click);
+                        index++; //Increment of index for both type of buttons
+                    }
+
+                    PasswordVaultPage.Controls.Add(btn);
+                    btn.Height = 28;
+                    btn.Width = 58;
+                    btn.Location = new Point(x, y);
+                    x += 58;
+                }
+                
+                PictureBox deleteBtn = new PictureBox()
+                {
+                    Name = "deleteBtn" + index,
+                    Size = new Size(26, 24),
+                    Location = new Point(x, y),
+                    Image = Image.FromFile(@"C:\Users\sardongmo\Desktop\P_PasswordManager\resources\images\deleteBtn.png"),
+                    SizeMode = PictureBoxSizeMode.Zoom
+                };
+
+                deleteBtn.Click += new EventHandler(deleteBtn_Click); //Add of an event to handle further operations
+                PasswordVaultPage.Controls.Add(deleteBtn);
+                y += 28;
+                x = 14;
+            }            
+        }
+        //AssignEvents(EventHandler updateBtn, EventHandler deleteBtn)
+
+        // Edition of registered password data
+        public void EditPasswordData (string newName, string previousName,
+            string newUsername, string previousUsername,
+            string newPassword, string previousPassword)
+        {
+            if (newName != previousName || newUsername != previousUsername || newPassword != previousPassword)
+                _model.EditPasswordData(newName, previousName, newUsername, newPassword);
+        }
+
+        public void EditPasswordData()
+        {
+            previousName = taskLbl.Text;
+            previousUsername =;
+            previousPassword =;
+            taskTodoTxt = new TextBox();
+            taskTodoTxt.Text = taskLbl.Text;
+            taskTodoTxt.Location = taskLbl.Location;
+            taskTodoTxt.Visible = true;
+            taskLbl.Visible = false;
+            taskTodoTxt.KeyDown += taskTodoTxt_KeyDown;
+
+            tasksPnl.Controls.Add(taskTodoTxt);
+        }
+
+        // Deletion of registered password data
+        public void ErasePasswordData (string name)
+        {
+            _model.ErasePasswordData(name);
         }
     }
 }

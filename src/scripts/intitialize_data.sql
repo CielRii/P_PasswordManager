@@ -15,7 +15,7 @@ INSERT INTO t_website (name, username, password) VALUES
 ('LinkedIn', 'alice_ln', 'lnpass1');
 
 -- Insertion of test data in manage table
-INSERT INTO manage (user_id, task_id) VALUES
+INSERT INTO manage (user_id, website_id) VALUES
 (1, 1),  -- alice → Gmail
 (2, 2),  -- bob → Facebook
 (3, 3),  -- charlie → Twitter
