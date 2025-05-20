@@ -43,7 +43,7 @@ namespace PasswordManager_App
 
         public void updateBtn_Click(object sender, EventArgs e)
         {
-            Controller.EditPasswordData();
+           // Controller.EditPasswordData();
             //(string newName, string previousName, string username, string password)
         }
 

@@ -1,0 +1,14 @@
+C:\Users\sardongmo\Desktop\TestForm\TestForm\bin\Debug\TestForm.exe
+C:\Users\sardongmo\Desktop\TestForm\TestForm\bin\Debug\TestForm.exe.config
+C:\Users\sardongmo\Desktop\TestForm\TestForm\obj\Debug\TestForm.csproj.AssemblyReference.cache
+C:\Users\sardongmo\Desktop\TestForm\TestForm\obj\Debug\TestForm.csproj.SuggestedBindingRedirects.cache
+C:\Users\sardongmo\Desktop\TestForm\TestForm\obj\Debug\TestForm.Form1.resources
+C:\Users\sardongmo\Desktop\TestForm\TestForm\obj\Debug\TestForm.Form2.resources
+C:\Users\sardongmo\Desktop\TestForm\TestForm\obj\Debug\TestForm.Properties.Resources.resources
+C:\Users\sardongmo\Desktop\TestForm\TestForm\obj\Debug\TestForm.csproj.GenerateResource.cache
+C:\Users\sardongmo\Desktop\TestForm\TestForm\obj\Debug\TestForm.csproj.CoreCompileInputs.cache
+C:\Users\sardongmo\Desktop\TestForm\TestForm\obj\Debug\TestForm.exe
+C:\Users\sardongmo\Desktop\TestForm\TestForm\obj\Debug\TestForm.pdb
+C:\Users\sardongmo\Desktop\TestForm\TestForm\bin\Debug\TestForm.pdb
+C:\Users\sardongmo\Desktop\TestForm\TestForm\obj\Debug\TestForm.Form3.resources
+C:\Users\sardongmo\Desktop\TestForm\TestForm\obj\Debug\TestForm.Form4.resources

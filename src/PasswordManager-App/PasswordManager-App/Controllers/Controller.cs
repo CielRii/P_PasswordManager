@@ -368,20 +368,20 @@ namespace PasswordManager_App
                 _model.EditPasswordData(newName, previousName, newUsername, newPassword);
         }
 
-        public void EditPasswordData()
-        {
-            previousName = taskLbl.Text;
-            previousUsername =;
-            previousPassword =;
-            taskTodoTxt = new TextBox();
-            taskTodoTxt.Text = taskLbl.Text;
-            taskTodoTxt.Location = taskLbl.Location;
-            taskTodoTxt.Visible = true;
-            taskLbl.Visible = false;
-            taskTodoTxt.KeyDown += taskTodoTxt_KeyDown;
+        //public void EditPasswordData()
+        //{
+        //    previousName = taskLbl.Text;
+        //    previousUsername =;
+        //    previousPassword =;
+        //    taskTodoTxt = new TextBox();
+        //    taskTodoTxt.Text = taskLbl.Text;
+        //    taskTodoTxt.Location = taskLbl.Location;
+        //    taskTodoTxt.Visible = true;
+        //    taskLbl.Visible = false;
+        //    taskTodoTxt.KeyDown += taskTodoTxt_KeyDown;
 
-            tasksPnl.Controls.Add(taskTodoTxt);
-        }
+        //    tasksPnl.Controls.Add(taskTodoTxt);
+        //}
 
         // Deletion of registered password data
         public void ErasePasswordData (string name)

@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS t_user(
    user_id INT AUTO_INCREMENT,
    username VARCHAR(50) NOT NULL,
    masterPassword VARCHAR(72) NOT NULL,
-   salt VARCHAR(20),
+   salt VARBINARY(20),
    administrator BOOLEAN NOT NULL,
    PRIMARY KEY(user_id),
    UNIQUE(username)
