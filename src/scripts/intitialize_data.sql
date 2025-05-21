@@ -29,7 +29,8 @@ BEGIN
     DECLARE uid INT;
     DECLARE uname VARCHAR(50);
     DECLARE rawPass VARCHAR(72);
-    DECLARE salt BINARY(8);
+    DECLARE salt VARBINARY(20);
+    DECLARE longSalt VARBINARY(256);
     DECLARE concatBytes BLOB;
     DECLARE hashed BINARY(32);
     DECLARE final BLOB;
@@ -45,8 +46,8 @@ BEGIN
         END IF;
 
         -- Générer un sel de 8 octets aléatoires
-        SET salt = UNHEX(SHA2(CONCAT(RAND(), NOW()), 256));
-        SET salt = LEFT(salt, 8);
+        SET longSalt = UNHEX(SHA2(CONCAT(RAND(), NOW()), 256));
+        SET salt = LEFT(longSalt, 20);
 
         -- Concaténer password et sel
         SET concatBytes = CONCAT(CONVERT(rawPass USING utf8mb4), salt);

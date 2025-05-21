@@ -20,6 +20,7 @@ namespace TestForm
         private int nbOfData = 6;
         private Button btn;
         private int index;
+        private int indexData;
         private int x = 14;
         private int y = 14;
         private void Form4_Load(object sender, EventArgs e)
@@ -76,6 +77,7 @@ namespace TestForm
             x = 12; //Reinitialisation of the position
 
             index = 0;
+            indexData = 0;
             int j;
             for (int i = 0; i < nbOfData / nbOfColumns; i++) // As we intialize the variable to 1 instead of 0
             {
@@ -127,6 +129,7 @@ namespace TestForm
                     SizeMode = PictureBoxSizeMode.Zoom //PictureBoxSizeMode.CenterImage
                 };
                 Controls.Add(deleteBtn);
+                indexData += 3;
                 y += 28;
                 x = 12;
             }

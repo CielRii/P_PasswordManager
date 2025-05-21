@@ -9,11 +9,7 @@ CREATE TABLE IF NOT EXISTS t_user(
    user_id INT AUTO_INCREMENT,
    username VARCHAR(50) NOT NULL,
    masterPassword VARCHAR(72) NOT NULL,
-<<<<<<< HEAD
    salt VARBINARY(20),
-=======
-   salt VARCHAR(20),
->>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
    administrator BOOLEAN NOT NULL,
    PRIMARY KEY(user_id),
    UNIQUE(username)
