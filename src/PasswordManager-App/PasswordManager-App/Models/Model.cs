@@ -24,12 +24,15 @@ namespace PasswordManager_App
         private int userID;
         public byte[] salt;
 
+<<<<<<< HEAD
         //private string dataQuery = "SELECT w.name, w.username, w.password " +
         //        "FROM `t_website` w JOIN `manage` m ON w.website_id = m.website_id " +
         //        "JOIN `t_user` u ON u.user_id = m.user_id " +
         //        "WHERE u.user_id =  @userID; ";
 
 
+=======
+>>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
         // Connection to the database
         public bool IsConnect()
         {
@@ -85,6 +88,15 @@ namespace PasswordManager_App
             return false;
         }
 
+<<<<<<< HEAD
+=======
+        // Retrieve user id
+        public int RetrieveUserID()
+        {
+            return userID;
+        }
+
+>>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
         // Retrieve the salt of the master password
         public byte[] GetSalt(string username)
         {
@@ -103,6 +115,10 @@ namespace PasswordManager_App
             return salt;
         }
 
+<<<<<<< HEAD
+=======
+        // Check if username is avaible
+>>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
         public bool CheckUserAvaible(string username)
         {
             if (!IsConnect()) return false;
@@ -124,6 +140,10 @@ namespace PasswordManager_App
             return true;
         }
 
+<<<<<<< HEAD
+=======
+        // Create a new user
+>>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
         public bool CreateUser(string username, string password, byte[] salt)
         {
             if (!IsConnect()) return false;
@@ -155,6 +175,10 @@ namespace PasswordManager_App
             return true;
         }
 
+<<<<<<< HEAD
+=======
+        // Count number of user data line 
+>>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
         public int NumberOfData()
         {
             if (!IsConnect()) return 0;
@@ -175,9 +199,16 @@ namespace PasswordManager_App
         }
 
         // Send an array of data registered for passwords
+<<<<<<< HEAD
         public string [] DisplayPasswordData()
         {
             if (!IsConnect()) return null;
+=======
+        public string [] DisplayPasswordData(int userID)
+        {
+            if (!IsConnect()) return null;
+            this.userID = userID;
+>>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
 
             string query = "SELECT w.name, w.username, w.password " +
                 "FROM `t_website` w JOIN `manage` m ON w.website_id = m.website_id " +
@@ -187,7 +218,11 @@ namespace PasswordManager_App
             string[] webSites = new string[NumberOfData()]; //Definition of website array with its length
 
             cmd = new MySqlCommand(query, Connection);
+<<<<<<< HEAD
             cmd.Parameters.AddWithValue("@userID", 1);
+=======
+            cmd.Parameters.AddWithValue("@userID", userID);
+>>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
             dataReader = cmd.ExecuteReader();
             int previousI = 0;
             while (dataReader.Read())

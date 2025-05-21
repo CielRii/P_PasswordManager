@@ -33,7 +33,10 @@ namespace PasswordManager_App
 
         private Label taskLbl;
         private TextBox taskTodoTxt;
+<<<<<<< HEAD
         private Panel tasksPnl;
+=======
+>>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
         private string previousName;
         private string previousUsername;
         private string previousPassword;
@@ -285,7 +288,11 @@ namespace PasswordManager_App
         public void DisplayPasswordData()
         {
             List<WebSite> webSites = new List<WebSite>();
+<<<<<<< HEAD
             string [] data = _model.DisplayPasswordData();
+=======
+            string [] data = _model.DisplayPasswordData(_model.RetrieveUserID()); //Retrieve data based on id of the current user
+>>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
             nbData = _model.NumberOfData();
 
             for (int i = 0; i < nbData; i++)
@@ -310,8 +317,13 @@ namespace PasswordManager_App
             dataGridView.Columns["Password"].HeaderText = "Mot de passe";
         }
 
+<<<<<<< HEAD
         // Display
         public void DisplayButtons()
+=======
+        // Display of buttons and icons to manage password data
+        public void DisplayMeansToManagePasswordData()
+>>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
         {
             index = 0;
             for (int i = 0; i < nbData/3; i++)
@@ -361,13 +373,18 @@ namespace PasswordManager_App
 
         // Edition of registered password data
         public void EditPasswordData (string newName, string previousName,
+<<<<<<< HEAD
             string newUsername, string previousUsername,
             string newPassword, string previousPassword)
+=======
+        string newUsername, string previousUsername, string newPassword, string previousPassword)
+>>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
         {
             if (newName != previousName || newUsername != previousUsername || newPassword != previousPassword)
                 _model.EditPasswordData(newName, previousName, newUsername, newPassword);
         }
 
+<<<<<<< HEAD
         //public void EditPasswordData()
         //{
         //    previousName = taskLbl.Text;
@@ -382,6 +399,24 @@ namespace PasswordManager_App
 
         //    tasksPnl.Controls.Add(taskTodoTxt);
         //}
+=======
+        public void EditPasswordData()
+        {
+            //Se répérer grâce à un index
+
+            //previousName = taskLbl.Text;
+            //previousUsername =;
+            //previousPassword =;
+            //taskTodoTxt = new TextBox();
+            //taskTodoTxt.Text = taskLbl.Text;
+            //taskTodoTxt.Location = taskLbl.Location;
+            //taskTodoTxt.Visible = true;
+            //taskLbl.Visible = false;
+            //taskTodoTxt.KeyDown += taskTodoTxt_KeyDown;
+
+            //tasksPnl.Controls.Add(taskTodoTxt);
+        }
+>>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
 
         // Deletion of registered password data
         public void ErasePasswordData (string name)

@@ -148,6 +148,10 @@
             this.Controls.Add(this.createAccountBtn);
             this.Name = "UserCreationPage";
             this.Text = "Form1";
+<<<<<<< HEAD
+=======
+            this.Load += new System.EventHandler(this.UserCreationPage_Load);
+>>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
             ((System.ComponentModel.ISupportInitialize)(this.helpBtn)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

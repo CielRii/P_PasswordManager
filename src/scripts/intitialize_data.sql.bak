@@ -21,7 +21,13 @@ INSERT INTO manage (user_id, website_id) VALUES
 (3, 3),  -- charlie → Twitter
 (1, 4);  -- alice → LinkedIn
 
+<<<<<<< HEAD
+
+-- Procedure created by ChatGPT
+DELIMITER $$
+=======
 DELIMITER //
+>>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
 
 CREATE PROCEDURE hash_user_passwords()
 BEGIN
@@ -68,4 +74,12 @@ BEGIN
     END LOOP;
     CLOSE cur;
 END //
+
+<<<<<<< HEAD
 DELIMITER ;
+
+-- Call of the procedure
+CALL hash_user_passwords();
+=======
+DELIMITER ;
+>>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
