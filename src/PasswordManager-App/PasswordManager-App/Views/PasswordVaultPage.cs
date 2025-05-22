@@ -23,11 +23,8 @@ namespace PasswordManager_App
         private void PasswordVaultPage_Load(object sender, EventArgs e)
         {
             Controller.DisplayPasswordData();
-<<<<<<< HEAD
-            Controller.DisplayButtons();
-=======
+            //Controller.DisplayButtons();
             Controller.DisplayMeansToManagePasswordData();
->>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
         }
 
         private void optionsBtn_Click(object sender, EventArgs e)
@@ -47,21 +44,15 @@ namespace PasswordManager_App
 
         public void updateBtn_Click(object sender, EventArgs e)
         {
-<<<<<<< HEAD
            // Controller.EditPasswordData();
-=======
             Controller.EditPasswordData();
->>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
             //(string newName, string previousName, string username, string password)
         }
 
         public void deleteBtn_Click(object sender, EventArgs e)
         {
-<<<<<<< HEAD
             //Controller.ErasePasswordData();
-=======
-            Controller.ErasePasswordData();
->>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
+            //Controller.ErasePasswordData();
         }
     }
 }

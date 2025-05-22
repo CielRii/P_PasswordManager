@@ -20,15 +20,12 @@ namespace PasswordManager_App
             InitializeComponent();
         }
 
-<<<<<<< HEAD
-=======
         private void UserCreationPage_Load(object sender, EventArgs e)
         {
             newUserPasswordInsert.UseSystemPasswordChar = true; //Hide password when taping
             newUserConfirmPasswordInsert.UseSystemPasswordChar = true; //Hide password when taping
         }
 
->>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
         private void helpBtn_Click(object sender, EventArgs e)
         {
             Controller.HelpMessage(1);

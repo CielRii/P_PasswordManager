@@ -12,7 +12,7 @@ namespace PasswordManager_App
     internal static class Program
     {
         /// <summary>
-        /// Point d'entrée principal de l'application.
+        /// Main entry point of the app
         /// </summary>
         [STAThread]
         static void Main()
@@ -36,7 +36,7 @@ namespace PasswordManager_App
             passwordBackup.Controller = controller;
             passwordGeneration.Controller = controller;
             passwordVault.Controller = controller;
-            userCreation.Controller = controller;
+            userCreation.Controller = controller;          
 
             //Initialization of classes in Controller.cs 
             controller.PasswordBackupPage = passwordBackup;
@@ -44,11 +44,7 @@ namespace PasswordManager_App
             controller.PasswordVaultPage = passwordVault;
             controller.UserCreationPage = userCreation;
 
-<<<<<<< HEAD
-            Application.Run(passwordBackup);
-=======
-            Application.Run(passwordVault);
->>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
+            Application.Run(home);
         }
     }
 }

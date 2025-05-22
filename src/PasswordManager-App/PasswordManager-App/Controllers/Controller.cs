@@ -33,10 +33,8 @@ namespace PasswordManager_App
 
         private Label taskLbl;
         private TextBox taskTodoTxt;
-<<<<<<< HEAD
         private Panel tasksPnl;
-=======
->>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
+
         private string previousName;
         private string previousUsername;
         private string previousPassword;
@@ -147,7 +145,7 @@ namespace PasswordManager_App
             {
                 if (_model.CheckLogin(username, HashPassword(password, true)))
                 {
-                    Redirection("TasksTodoPage");
+                    Redirection("PasswordVaultPage");
                 }
                 else
                 {
@@ -169,7 +167,6 @@ namespace PasswordManager_App
                 salt = _model.GetSalt(username); //Get salt in bytes
             else
                 salt = GenerateSalt(); //Generate a salt
-
 
             using (var sha256 = new SHA256Managed())
             {
@@ -210,7 +207,6 @@ namespace PasswordManager_App
             { return false; }
         }
 
-
         public void CheckPassword(string password, string confirmPassword)
         {
             Regex upperCase = new Regex("([A-Z])");
@@ -233,6 +229,7 @@ namespace PasswordManager_App
             }
         }
 
+        // Generate a password depending on the user needs
         public string GeneratePassword(int nbOfCharacters, bool nb, bool capitalLetter, bool specialCharacter)
         {
             string characters = "abcdefghijklmnopqrstuvwxyz";
@@ -264,6 +261,12 @@ namespace PasswordManager_App
                 PasswordGenerationPage.passwordStrengthPic.Visible = true;
                 PasswordGenerationPage.passwordStrengthCursor.Visible = true;
             }
+            else
+            {
+                PasswordGenerationPage.passwordStrengthLbl.Visible = false;
+                PasswordGenerationPage.passwordStrengthPic.Visible = false;
+                PasswordGenerationPage.passwordStrengthCursor.Visible = false;
+            }
             //PasswordGenerationPage.passwordStrengthCursor.Position(x, y);
         }
 
@@ -288,11 +291,7 @@ namespace PasswordManager_App
         public void DisplayPasswordData()
         {
             List<WebSite> webSites = new List<WebSite>();
-<<<<<<< HEAD
-            string [] data = _model.DisplayPasswordData();
-=======
             string [] data = _model.DisplayPasswordData(_model.RetrieveUserID()); //Retrieve data based on id of the current user
->>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
             nbData = _model.NumberOfData();
 
             for (int i = 0; i < nbData; i++)
@@ -317,13 +316,8 @@ namespace PasswordManager_App
             dataGridView.Columns["Password"].HeaderText = "Mot de passe";
         }
 
-<<<<<<< HEAD
-        // Display
-        public void DisplayButtons()
-=======
         // Display of buttons and icons to manage password data
         public void DisplayMeansToManagePasswordData()
->>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
         {
             index = 0;
             for (int i = 0; i < nbData/3; i++)
@@ -373,18 +367,13 @@ namespace PasswordManager_App
 
         // Edition of registered password data
         public void EditPasswordData (string newName, string previousName,
-<<<<<<< HEAD
-            string newUsername, string previousUsername,
-            string newPassword, string previousPassword)
-=======
-        string newUsername, string previousUsername, string newPassword, string previousPassword)
->>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
+        string newUsername, string previousUsername,
+        string newPassword, string previousPassword)
         {
             if (newName != previousName || newUsername != previousUsername || newPassword != previousPassword)
                 _model.EditPasswordData(newName, previousName, newUsername, newPassword);
         }
 
-<<<<<<< HEAD
         //public void EditPasswordData()
         //{
         //    previousName = taskLbl.Text;
@@ -399,7 +388,6 @@ namespace PasswordManager_App
 
         //    tasksPnl.Controls.Add(taskTodoTxt);
         //}
-=======
         public void EditPasswordData()
         {
             //Se répérer grâce à un index
@@ -416,7 +404,6 @@ namespace PasswordManager_App
 
             //tasksPnl.Controls.Add(taskTodoTxt);
         }
->>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
 
         // Deletion of registered password data
         public void ErasePasswordData (string name)

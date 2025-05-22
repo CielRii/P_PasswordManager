@@ -23,10 +23,7 @@ namespace PasswordManager_App
         private void HomePage_Load(object sender, EventArgs e)
         {
             Controller.ShareAppID(); //Share of app identity 
-<<<<<<< HEAD
-=======
             passwordInsert.UseSystemPasswordChar = true; //Hide password when taping
->>>>>>> 3bb0ba1d405b490207e11c3ff22abc38bb79a11c
         }
 
         private void helpBtn_Click(object sender, EventArgs e)
