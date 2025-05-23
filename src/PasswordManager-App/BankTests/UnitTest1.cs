@@ -58,7 +58,7 @@ namespace BankTests
         }
 
         /* FOR USER ACCOUNT CREATION */
-        public void AccountCreation_NameUnavaible()
+        public void AccountCreation_NameUnAvailable()
         {
             //Arrange
             Controller.CheckLogin("notTheRightUser", "notTheRightPassword");

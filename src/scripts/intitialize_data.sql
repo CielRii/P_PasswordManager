@@ -21,7 +21,7 @@ INSERT INTO manage (user_id, website_id) VALUES
 (3, 3),  -- charlie → Twitter
 (1, 4);  -- alice → LinkedIn
 
-DELIMITER //
+DELIMITER $$
 
 CREATE PROCEDURE hash_user_passwords()
 BEGIN
@@ -68,5 +68,4 @@ BEGIN
 
     END LOOP;
     CLOSE cur;
-END //
-DELIMITER ;
+END $$

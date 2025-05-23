@@ -22,9 +22,9 @@ namespace PasswordManager_App
 
         private void PasswordVaultPage_Load(object sender, EventArgs e)
         {
-            Controller.DisplayPasswordData();
+            //Controller.DisplayPasswordData();
             //Controller.DisplayButtons();
-            Controller.DisplayMeansToManagePasswordData();
+            //Controller.DisplayMeansToManagePasswordData();
         }
 
         private void optionsBtn_Click(object sender, EventArgs e)
@@ -45,7 +45,7 @@ namespace PasswordManager_App
         public void updateBtn_Click(object sender, EventArgs e)
         {
            // Controller.EditPasswordData();
-            Controller.EditPasswordData();
+            //Controller.EditPasswordData();
             //(string newName, string previousName, string username, string password)
         }
 

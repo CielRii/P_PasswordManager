@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿///ETML
+///Author : Sarah Dongmo
+///Creation date : 12.05.25
+///Last modification : 
+///Description : this page allows the user to create an account for using the app.
+
+using System;
 using System.Windows.Forms;
 
 namespace PasswordManager_App
@@ -22,29 +21,34 @@ namespace PasswordManager_App
 
         private void UserCreationPage_Load(object sender, EventArgs e)
         {
-            newUserPasswordInsert.UseSystemPasswordChar = true; //Hide password when taping
-            newUserConfirmPasswordInsert.UseSystemPasswordChar = true; //Hide password when taping
+            // Hide passwords when typing
+            newUserPasswordInsert.UseSystemPasswordChar = true;
+            newUserConfirmPasswordInsert.UseSystemPasswordChar = true; 
         }
 
         private void helpBtn_Click(object sender, EventArgs e)
         {
-            Controller.HelpMessage(1);
+            Controller.HelpMessage(1); //Display help message
         }
 
         private void createAccountBtn_Click(object sender, EventArgs e)
         {
-            if (Controller.CheckUserAvaible(newUserNameInsert.Text))
-                Controller.CheckPassword(newUserPasswordInsert.Text, newUserConfirmPasswordInsert.Text);
-            else
-                MessageBox.Show("Ce nom d'utilisateur n'est pas disponible, veuillez choisir un autre.");
-
-            Hide();
+            if (Controller.CheckUserInsert(newUserNameInsert.Text, newUserPasswordInsert.Text, newUserConfirmPasswordInsert.Text)) //Check textboxes state
+            {
+                if (Controller.CheckUserAvailable(newUserNameInsert.Text)) //Check if the user is available
+                {
+                    if (Controller.CheckPassword(newUserPasswordInsert.Text, newUserConfirmPasswordInsert.Text)) //Check if passwords are alike
+                    {
+                        Hide(); //Hide the actual page if logni validated
+                    }
+                }
+            }
         }
 
         private void logInRedirection_Click(object sender, EventArgs e)
         {
-            Controller.Redirection();
-            Hide();
+            Controller.Redirection(); //Redirection to the homepage
+            Hide(); //Hide the actual page because of the change of active page
         }
     }
 }

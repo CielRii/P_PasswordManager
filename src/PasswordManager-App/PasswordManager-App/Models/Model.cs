@@ -24,12 +24,6 @@ namespace PasswordManager_App
         private int userID;
         public byte[] salt;
 
-        //private string dataQuery = "SELECT w.name, w.username, w.password " +
-        //        "FROM `t_website` w JOIN `manage` m ON w.website_id = m.website_id " +
-        //        "JOIN `t_user` u ON u.user_id = m.user_id " +
-        //        "WHERE u.user_id =  @userID; ";
-
-
         // Connection to the database
         public bool IsConnect()
         {
@@ -57,7 +51,7 @@ namespace PasswordManager_App
         }
 
         // Check login data validity
-        public bool CheckLogin(string username, string password)
+        public bool CheckLogin(string username, string masterPassword)
         {
             if (!IsConnect()) return false;
 
@@ -72,7 +66,7 @@ namespace PasswordManager_App
 
                 if (dataReader.GetString(1) == username)
                 {
-                    if (dataReader.GetString(2) == password)
+                    if (dataReader.GetString(2) == masterPassword)
                     {
                         dataReader.Close();
                         return true;
@@ -81,7 +75,6 @@ namespace PasswordManager_App
             }
 
             dataReader.Close();
-            DisConnect();
             return false;
         }
 
@@ -99,7 +92,7 @@ namespace PasswordManager_App
             string query = "SELECT salt FROM t_user WHERE `username` = @username;"; //Secure request
             cmd = new MySqlCommand(query, Connection); //Send the request to the database
             cmd.Parameters.AddWithValue("@username", username); //Bind the parameters
-            dataReader = cmd.ExecuteReader();
+            dataReader = cmd.ExecuteReader(); //
             while (dataReader.Read())
             {
                 salt = (byte[])dataReader.GetValue(0); //
@@ -109,8 +102,8 @@ namespace PasswordManager_App
             return salt;
         }
 
-        // Check if username is avaible
-        public bool CheckUserAvaible(string username)
+        // Check if username is available
+        public bool CheckUserAvailable(string username)
         {
             if (!IsConnect()) return false;
 
@@ -122,7 +115,6 @@ namespace PasswordManager_App
                 if (dataReader.GetString(0) == username)
                 {
                     dataReader.Close();
-                    DisConnect();
                     return false;
                 }
             }
@@ -132,34 +124,36 @@ namespace PasswordManager_App
         }
 
         // Create a new user
-        public bool CreateUser(string username, string password, byte[] salt)
+        public bool CreateUser(string username, string masterPassword, byte[] salt)
         {
             if (!IsConnect()) return false;
 
-            string query = "INSERT INTO `t_user`(user_id, username, password, salt) VALUES(NULL, @username, @password, @salt);";
+            string query = "INSERT INTO `t_user`(user_id, username, masterPassword, salt, administrator) " +
+                "VALUES(NULL, @username, @masterPassword, @salt, @administrator);";
 
             cmd = new MySqlCommand(query, Connection);
             cmd.Parameters.AddWithValue("@username", username);
-            cmd.Parameters.AddWithValue("@password", password);
+            cmd.Parameters.AddWithValue("@masterPassword", masterPassword);
             cmd.Parameters.AddWithValue("@salt", salt);
+            cmd.Parameters.AddWithValue("@administrator", false);
             cmd.Prepare(); //
             cmd.ExecuteNonQuery();
             return true;
         }
 
-        // Add passwords and data related to them
-        public bool AddPassword(string username, string password, string website)
+        // Add website and login data related to it
+        public bool AddWebsiteData(string username, string password, string name)
         {
             if (!IsConnect()) return false;
 
             string query = "INSERT INTO `t_website`(website_id, name, username, password)" +
-                "VALUES (NULL, @name, @username, password);";
+                "VALUES (NULL, @name, @username, @password);";
             cmd = new MySqlCommand(query, Connection);
             cmd.Parameters.AddWithValue("@username", username);
             cmd.Parameters.AddWithValue("@password", password);
-            cmd.Parameters.AddWithValue("@name", website);
+            cmd.Parameters.AddWithValue("@name", name);
             cmd.Prepare(); //
-            cmd.ExecuteNonQuery();
+            cmd.ExecuteNonQuery(); //
             return true;
         }
 
@@ -196,7 +190,6 @@ namespace PasswordManager_App
             string[] webSites = new string[NumberOfData()]; //Definition of website array with its length
 
             cmd = new MySqlCommand(query, Connection);
-            cmd.Parameters.AddWithValue("@userID", 1);
             cmd.Parameters.AddWithValue("@userID", userID);
             dataReader = cmd.ExecuteReader();
             int previousI = 0;

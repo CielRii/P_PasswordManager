@@ -24,6 +24,7 @@ namespace PasswordManager_App
 
         // To save new user username after checking avaibility
         private string username;
+        private string masterPassword;
         private byte[] salt;
         private int nbData;
         private Button btn;
@@ -138,35 +139,46 @@ namespace PasswordManager_App
         }
 
         // Check login data
-        public void CheckLogin(string username, string password)
+        public bool CheckLogin(string username, string masterPassword)
         {
             this.username = username;
-            if (username != string.Empty && password != string.Empty)
+            if (username != string.Empty && masterPassword != string.Empty)
             {
-                if (_model.CheckLogin(username, HashPassword(password, true)))
+                if (_model.CheckLogin(username, HashPassword(masterPassword, true)))
                 {
-                    Redirection("PasswordVaultPage");
+                    Redirection("PasswordVaultPage"); //Redirection to access the app
+                    this.masterPassword = masterPassword;
+                    return true;
                 }
                 else
                 {
                     MessageBox.Show("Vos identifiants ne sont pas reconnus. Veuillez les re-vérifier ou créer un nouveau compte.");
+                    return false;
                 }
             }
             else
             {
                 MessageBox.Show("Vos identifiants ne sont pas reconnus. Veuillez les re-vérifier ou créer un nouveau compte.");
+                return false;
             }
         }
 
 
-        // Hash password before adding or comparing it to what is in the database
+        // Hash password before adding or comparing it to what is in the database... source
         public string HashPassword(string password, bool created)
         {
             // Control the need for the salt
             if (created)
-                salt = _model.GetSalt(username); //Get salt in bytes
+            {
+                if (masterPassword != null)
+                    salt = Encoding.Default.GetBytes(masterPassword); //
+                else
+                    salt = _model.GetSalt(username); //Get salt in bytes
+            }
             else
+            {
                 salt = GenerateSalt(); //Generate a salt
+            }
 
             using (var sha256 = new SHA256Managed())
             {
@@ -189,6 +201,7 @@ namespace PasswordManager_App
             }
         }
 
+        // Generate the salt for the password... source
         public static byte[] GenerateSalt(int size = 20)
         {
             using (var rng = new RNGCryptoServiceProvider()) //Secure random generator 
@@ -199,33 +212,64 @@ namespace PasswordManager_App
             }
         }
 
-        public bool CheckUserAvaible(string username)
+        // Check 
+        public bool CheckUserInsert(string username, string password, string confirmPassword)
         {
-            if (_model.CheckUserAvaible(username)) //
-            { this.username = username; return true; }
-            else
-            { return false; }
+            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password) && !string.IsNullOrEmpty(confirmPassword))
+            {
+                return true;
+            }
+            else 
+            {
+                MessageBox.Show("Veuillez remplir chacun des champs pour créer un compte.");
+                return false;
+            }
         }
 
-        public void CheckPassword(string password, string confirmPassword)
+        // Check if the user is available
+        public bool CheckUserAvailable(string username)
+        {
+            if (_model.CheckUserAvailable(username)) //Check it by consulting the database
+            { 
+                this.username = username;
+                return true; 
+            }
+            else
+            {
+                MessageBox.Show("Ce nom d'utilisateur n'est pas disponible, veuillez choisir un autre.");
+                return false; 
+            }
+        }
+
+        //
+        public bool CheckPassword(string masterPassword, string confirmPassword)
         {
             Regex upperCase = new Regex("([A-Z])");
             Regex lowerCase = new Regex("([a-z])");
             Regex digit = new Regex("([0-9])");
             Regex specials = new Regex("([-/#~%*!?])");
 
-            if (password.Length >= 14 && upperCase.Matches(password).Count >= 1 && lowerCase.Matches(password).Count >= 1 &&
-                digit.Matches(password).Count >= 1 && specials.Matches(password).Count >= 1) // Controls the password is enough secure
+            if (masterPassword.Length >= 14 && upperCase.Matches(masterPassword).Count >= 1 && lowerCase.Matches(masterPassword).Count >= 1 &&
+                digit.Matches(masterPassword).Count >= 1 && specials.Matches(masterPassword).Count >= 1) // Controls the password is enough secure
             {
-                if (password == confirmPassword)
-                { _model.CreateUser(username, HashPassword(password, false), salt); Redirection("PasswordBackupPage"); } //
+                if (masterPassword == confirmPassword)
+                { 
+                    _model.CreateUser(username, HashPassword(masterPassword, false), salt); 
+                    Redirection("PasswordBackupPage");
+                    this.masterPassword = masterPassword;
+                    return true;
+                } //
                 else
-                { MessageBox.Show("Vos deux entrées de mots de passe ne se correpondent pas."); }
+                { 
+                    MessageBox.Show("Vos deux entrées de mots de passe ne se correpondent pas."); 
+                    return false;
+                }
             }
             else
             {
-                MessageBox.Show("Votre mot de passe n'est pas conforme. Il doit contenir au moins 8 caractères, un chiffre, " +
+                MessageBox.Show("Votre mot de passe n'est pas conforme. Il doit contenir au moins 15 caractères, un chiffre, " +
                 "un lettre majuscule, une lettre miniscule et un caractère spécial.");
+                return false;
             }
         }
 
@@ -270,12 +314,19 @@ namespace PasswordManager_App
             //PasswordGenerationPage.passwordStrengthCursor.Position(x, y);
         }
 
-        // To backup passwords and data related to them
-        public void PasswordBackup(string username, string password, string website)
+        // To back up website and data related to it
+        public bool WebsiteDataBackup(string username, string password, string website)
         {
-            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password) && !string.IsNullOrEmpty(website))
+            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password) && !string.IsNullOrEmpty(website)) //Check that none field is empty
             {
-                _model.AddPassword(username, password, website);
+                _model.AddWebsiteData(username, HashPassword(password, true), website); //Specify 
+                MessageBox.Show("Vos données ont bien été enregistrées."); //Message to confirm data backup
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("Veuillez s'il-vous-plaît remplir chacun des champs."); //Message displayed if at least one field is empty 
+                return false;
             }
         }
 
@@ -331,7 +382,7 @@ namespace PasswordManager_App
                     {
                         btn.Name = "showPassword" + "Btn" + index;
                         btn.Text = "Afficher";
-                        btn.Click += new EventHandler(showPasswordDataBtn_Click);
+                        btn.Click += new EventHandler(showPasswordDataBtn_Click); //
                     }
                     else
                     {
