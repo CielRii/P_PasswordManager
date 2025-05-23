@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS t_user(
    username VARCHAR(50) NOT NULL,
    masterPassword VARCHAR(72) NOT NULL,
    salt VARBINARY(20),
-   administrator BOOLEAN NOT NULL,
+   administrator BOOLEAN NOT NULL DEFAULT TRUE,
    PRIMARY KEY(user_id),
    UNIQUE(username)
 );
@@ -33,3 +33,7 @@ CREATE TABLE IF NOT EXISTS manage(
    FOREIGN KEY(user_id) REFERENCES t_user(user_id),
    FOREIGN KEY(website_id) REFERENCES t_website(website_id)
 );
+
+
+ALTER TABLE t_user
+administrator DEFAULT TRUE;

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿///ETML
+///Author : Sarah Dongmo
+///Creation date : 12.05.25
+///Last modification : 
+///Description : this page allows the user to see data she/he registered in the app.
+
+using System;
 using System.Windows.Forms;
 
 namespace PasswordManager_App
@@ -22,37 +21,40 @@ namespace PasswordManager_App
 
         private void PasswordVaultPage_Load(object sender, EventArgs e)
         {
-            //Controller.DisplayPasswordData();
+            Controller.DisplayPasswordData();
+            Controller.AssignPasswordVaultEvents(showPasswordBtn_Click, updateBtn_Click, deleteBtn_Click); //
+
             //Controller.DisplayButtons();
             //Controller.DisplayMeansToManagePasswordData();
         }
 
         private void optionsBtn_Click(object sender, EventArgs e)
         {
-            Controller.MenuData();
+            Controller.MenuData(); //Display the menu
         }
 
         private void helpBtn_Click(object sender, EventArgs e)
         {
-            Controller.HelpMessage(4);
+            Controller.HelpMessage(4); //Display help message
         }
 
-        public void showPasswordDataBtn_Click(object sender, EventArgs e)
+        private void showPasswordBtn_Click(object sender, EventArgs e)
         {
-
+            if (sender is Label lbl)
+            {
+                Controller.ManagePasswordVisibility(lbl.Name);
+            }
         }
 
-        public void updateBtn_Click(object sender, EventArgs e)
+        private void updateBtn_Click(object sender, EventArgs e)
         {
-           // Controller.EditPasswordData();
-            //Controller.EditPasswordData();
+            Controller.EditPasswordData();
             //(string newName, string previousName, string username, string password)
         }
 
-        public void deleteBtn_Click(object sender, EventArgs e)
+        private void deleteBtn_Click(object sender, EventArgs e)
         {
-            //Controller.ErasePasswordData();
-            //Controller.ErasePasswordData();
+            Controller.ErasePasswordData();
         }
     }
 }

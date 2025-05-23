@@ -23,6 +23,7 @@ namespace TestForm
         private int indexData;
         private int x = 14;
         private int y = 14;
+
         private void Form4_Load(object sender, EventArgs e)
         {
             //for (int a = 0; a < data.Length / 2; a++)
