@@ -232,7 +232,7 @@ namespace PasswordManager_App
             cmd = new MySqlCommand(query, Connection);
             cmd.Parameters.AddWithValue("@name", name);
             cmd.Prepare();
-            cmd.ExecuteNonQuery();
+            cmd.ExecuteNonQuery(); //
             return true;
         }
     }

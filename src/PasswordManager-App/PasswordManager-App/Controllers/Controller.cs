@@ -41,18 +41,17 @@ namespace PasswordManager_App
         private int nbOfColumns;
         private const int NB_OF_BTNS = 2;
         private Label lbl;
+        private List<Label> lblList;
         private string[] passwords;
         private List<string> passwordList;
+        private List<Label> passwordLblList;
+        private List<Label> websiteLblList;
         private bool hidden = true;
 
-        private Label taskLbl;
-        private TextBox taskTodoTxt;
-        private Panel tasksPnl;
-
+        private TextBox txt;
         private string previousName;
         private string previousUsername;
         private string previousPassword;
-        private string newName;
 
         // Management of regex
         private Regex upperCase = new Regex("([A-Z])");
@@ -71,9 +70,9 @@ namespace PasswordManager_App
 
         public class WebSite
         {
-            public string Name { get; set; }
-            public string Username { get; set; }
-            public string Password { get; set; }
+            public Label Name { get; set; }
+            public Label Username { get; set; }
+            public Label Password { get; set; }
         }
 
         public Controller(Model model, HomePage home)
@@ -96,6 +95,7 @@ namespace PasswordManager_App
         private EventHandler updateBtn_Click { get; set; }
         private EventHandler deleteBtn_Click { get; set; }
 
+        // Assign event methods for password vault automatically created elements
         public void AssignPasswordVaultEvents(EventHandler showPasswordBtn, EventHandler updateBtn, EventHandler deleteBtn)
         {
             showPasswordBtn_Click = showPasswordBtn;
@@ -419,28 +419,48 @@ namespace PasswordManager_App
             x = 12; //Reinitialisation of the position
 
             index = 0;
-            indexData = 0;
-            int j;
+            indexData = 0; //To mangage the different user data
+            lblList = new List<Label>();
+            passwordList = new List<string>();
+            passwordLblList = new List<Label>();
+            websiteLblList = new List<Label>();
             for (int i = 0; i < nbOfData / nbOfColumns; i++) //As we intialize the variable to 1 instead of 0
             {
-                for (j = 0; j < nbOfColumns; j++)
+                for (int j = 0; j < nbOfColumns; j++)
                 {
                     // j = i * nbOfColumns;
                     lbl = new Label();
-                    lbl.Name = "dataLbl" + indexData;
+                    //lbl.Name = "dataLbl" + indexData;
+                    switch (i)
+                    {
+                        case 0 :
+                            lbl.Name = "websiteLbl" + index;
+                            break;
+                        case 1:
+                            lbl.Name = "usernameLbl" + index;
+                            break;
+                        case 2 :
+                            lbl.Name = "passwordLbl" + index;
+                            break;
+                    }
 
                     // Hide password
                     if (j == nbOfColumns - 1)
                     {
-                        for (int k = 0; k < data[indexData].Length; k++)
+                        for (int k = 0; k < data[indexData].Length; k++)//
                         {
                             lbl.Text += "*";
                         }
-                        passwordList.Add(data[j]); //Add password to password list
+                        passwordList.Add(data[indexData]); //Add password to password list
+                        passwordLblList.Add(lbl); //Add password label to password label list
                     }
                     else
                     {
-                        lbl.Text = data[j];
+                        if (j == 0)
+                        {
+                            websiteLblList.Add(lbl);
+                        }
+                        lbl.Text = data[indexData];
                     }
 
                     lbl.TextAlign = ContentAlignment.MiddleCenter;
@@ -448,6 +468,7 @@ namespace PasswordManager_App
                     lbl.Width = 158;
                     lbl.Height = 28;
                     lbl.Location = new Point(x, y); //128, 300
+                    lblList.Add(lbl);
                     PasswordVaultPage.Controls.Add(lbl);
                     indexData ++; //Increase data index
                     x += 158; //Consider the width of the textbox for incrementation
@@ -469,7 +490,6 @@ namespace PasswordManager_App
                         btn.Name = "btn" + "UpdateData" + index;
                         btn.Click += new EventHandler(updateBtn_Click); //Add of an event to handle further operations
                         btn.Text = "Update";
-                        index++; //Increment of index for both type of buttons
                     }
 
                     PasswordVaultPage.Controls.Add(btn);
@@ -486,16 +506,14 @@ namespace PasswordManager_App
                     Location = new Point(x, y),
                     Image = Image.FromFile(@"C:\Users\sardongmo\Desktop\P_PasswordManager\resources\images\deleteBtn.png"),
                     SizeMode = PictureBoxSizeMode.Zoom //PictureBoxSizeMode.CenterImage
-
                 };
                 deleteBtn.Click += new EventHandler(deleteBtn_Click); //Add of an event to handle further operations
                 PasswordVaultPage.Controls.Add(deleteBtn);
-                indexData += 3;
+                index++; //Increment of index for all element on the line
+                //indexData += 3;
                 y += 28;
                 x = 12;
             }
-
-
         }
 
         // Manage password visibility
@@ -507,23 +525,26 @@ namespace PasswordManager_App
                 int i;
                 if (int.TryParse(currentIndex, out i))
                 {
-                    taskLbl = tasksList[i];
-                }
-            }
+                    lbl = passwordLblList[i]; //Password to manage
 
-            passwords = passwordList.ToArray();
-            if (hidden)
-            {
-                lbl.Text = passwords[currentIndex];
-                hidden = false;
-            }
-            else
-            {
-                for (int k = 0; k < data[currentIndex].Length; k++)
-                {
-                    lbl.Text += "*";
+                    //lbl.Name = "passwordLbl" + index;
+                    //passwords = passwordList.ToArray(); //Convert
+
+                    if (hidden)
+                    {
+                        lbl.Text = passwordList[i];
+                        hidden = false;
+                    }
+                    else
+                    {
+                        lbl.Text = null; //Clear the label text before adding on char at time
+                        for (int k = 0; k < passwordList[i].Length; k++) //Refer to the length of the current password
+                        {
+                            lbl.Text += "*"; //Add one char at time
+                        }
+                        hidden = true;
+                    }
                 }
-                hidden = true;
             }
         }
 
@@ -536,26 +557,62 @@ namespace PasswordManager_App
                 _model.EditPasswordData(newName, previousName, newUsername, newPassword);
         }
 
-        public void EditPasswordData()
+        public void EditPasswordData(string currentData)
         {
-            //Se répérer grâce à un index
-            //previousName = taskLbl.Text;
-            //previousUsername =;
-            //previousPassword =;
-            //taskTodoTxt = new TextBox();
-            //taskTodoTxt.Text = taskLbl.Text;
-            //taskTodoTxt.Location = taskLbl.Location;
-            //taskTodoTxt.Visible = true;
-            //taskLbl.Visible = false;
-            //taskTodoTxt.KeyDown += taskTodoTxt_KeyDown;
+            string[] index = Regex.Split(currentData, @"\D+");
+            foreach (string currentIndex in index)
+            {
+                int i;
+                if (int.TryParse(currentIndex, out i))
+                {
+                    foreach (Label label in lblList)
+                    {
+                        if (label.Name.Contains(i.ToString())) //Check index 
+                        {
+                            previousName = lbl.Text; //... 
+                            previousUsername = lbl.Text;
+                            previousPassword = lbl.Text;
 
-            //tasksPnl.Controls.Add(taskTodoTxt);
+                            WebSite website = new WebSite();
+                            website.Name = "";
+                            website.Username = "";
+                            website.Password = "";
+
+                            lbl = lblList[];
+                            txt = new TextBox();
+                            txt.Text = lbl.Text;
+                            txt.Location = lbl.Location;
+                            txt.Visible = true;
+                            lbl.Visible = false;
+                            PasswordVaultPage.Controls.Add(txt); //Add textbox to password vault page
+                        }
+                    }
+                }
+            }
         }
 
         // Deletion of registered password data
-        public void ErasePasswordData (string name)
+        public void ErasePasswordData (string currentData)
         {
-            _model.ErasePasswordData(name);
+            string[] index = Regex.Split(currentData, @"\D+");
+            foreach (string currentIndex in index)
+            {
+                int i;
+                if (int.TryParse(currentIndex, out i))
+                {
+                    lbl = websiteLblList[i];
+                }
+            }
+
+            // Confirmation before deletion
+            DialogResult confirmErasePasswordData = MessageBox.Show("Êtes-vous sûr de vouloir supprimer les données de ce site internet ?",
+            "Confirmation avant suppression", MessageBoxButtons.YesNo);
+            if (confirmErasePasswordData == DialogResult.Yes)
+            {
+                MessageBox.Show("Vos données vont être supprimées.");
+                _model.ErasePasswordData(lbl.Text); //Erase the entire line
+                DisplayPasswordData(); //Refreshing of screen data 
+            }
         }
 
         //public void EditPasswordData()
