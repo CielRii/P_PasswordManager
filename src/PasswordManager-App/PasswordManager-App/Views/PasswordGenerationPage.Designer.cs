@@ -88,6 +88,7 @@
             this.passwordInsert.Name = "passwordInsert";
             this.passwordInsert.Size = new System.Drawing.Size(181, 20);
             this.passwordInsert.TabIndex = 11;
+            this.passwordInsert.TextChanged += new System.EventHandler(this.passwordInsert_TextChanged);
             // 
             // passwordLbl
             // 

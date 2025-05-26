@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿///ETML
+///Author : Sarah Dongmo
+///Creation date : 12.05.25
+///Last modification : 
+///Description : this page allows the user to generate a pasword with the possibility to check its strength.
+
+using System;
 using System.Windows.Forms;
 
 namespace PasswordManager_App
@@ -22,19 +21,24 @@ namespace PasswordManager_App
 
         private void optionsBtn_Click(object sender, EventArgs e)
         {
-            Controller.MenuData();
+            Controller.MenuData(); //Display the menu
         }
 
         private void helpBtn_Click(object sender, EventArgs e)
         {
-            Controller.HelpMessage(2);
+            Controller.HelpMessage(2); //Display help message
         }
 
         private void passwordGenerationBtn_Click(object sender, EventArgs e)
         {
-            passwordInsert.AppendText(Controller.GeneratePassword(Convert.ToInt32(nbOfCharactersInsert.Text), numberOption.Checked, capitalLetterOption.Checked,
-            specialCharacterOption.Checked)); //Display of the generated password
-            Controller.CheckPasswordStrength(passwordStrengthOption.Checked); //Check
+            Controller.EmptyUserInsert(passwordInsert); //Clear password textbox before adding new data
+            passwordInsert.AppendText(Controller.GeneratePassword
+            (Convert.ToInt32(nbOfCharactersInsert.Text), numberOption.Checked, capitalLetterOption.Checked, specialCharacterOption.Checked)); //Display of the generated password
+        }
+
+        private void passwordInsert_TextChanged(object sender, EventArgs e)
+        {
+            Controller.CheckPasswordStrength(passwordStrengthOption.Checked); //Check password strength
         }
     }
 }

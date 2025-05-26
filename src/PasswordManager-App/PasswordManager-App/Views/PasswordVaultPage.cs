@@ -42,7 +42,7 @@ namespace PasswordManager_App
         {
             if (sender is Button btn)
             {
-                Controller.ManagePasswordVisibility(btn.Name);
+                Controller.ManagePasswordVisibility(btn.Name); //Manage password visibility according to the index
             }
         }
 
@@ -52,7 +52,6 @@ namespace PasswordManager_App
             {
                 Controller.EditPasswordData(btn.Name);
             }
-            //(string newName, string previousName, string username, string password)
         }
 
         private void deleteBtn_Click(object sender, EventArgs e)

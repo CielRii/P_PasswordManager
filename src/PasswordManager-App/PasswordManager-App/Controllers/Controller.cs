@@ -46,12 +46,19 @@ namespace PasswordManager_App
         private List<string> passwordList;
         private List<Label> passwordLblList;
         private List<Label> websiteLblList;
+        private List<WebSite> websiteData;
+        private List<WebSiteUpdate> websiteUpdateData;
         private bool hidden = true;
 
         private TextBox txt;
         private string previousName;
         private string previousUsername;
         private string previousPassword;
+        private string newName;
+        private string newUsername;
+        private string newPassword;
+        private WebSite website;
+        private bool updating = false;
 
         // Management of regex
         private Regex upperCase = new Regex("([A-Z])");
@@ -73,6 +80,13 @@ namespace PasswordManager_App
             public Label Name { get; set; }
             public Label Username { get; set; }
             public Label Password { get; set; }
+        }
+
+        public class WebSiteUpdate
+        {
+            public TextBox Name { get; set; }
+            public TextBox Username { get; set; }
+            public TextBox Password { get; set; }
         }
 
         public Controller(Model model, HomePage home)
@@ -386,10 +400,10 @@ namespace PasswordManager_App
         }
 
         // Textboxes cleared
-        public void EmptyUserInsert(TextBox username, TextBox password, TextBox website)
+        public void EmptyUserInsert(TextBox password, TextBox username = null, TextBox website = null)
         {
-            username.Text = null;
             password.Text = null;
+            username.Text = null;
             website.Text = null;
         }
 
@@ -424,17 +438,23 @@ namespace PasswordManager_App
             passwordList = new List<string>();
             passwordLblList = new List<Label>();
             websiteLblList = new List<Label>();
+            websiteData = new List<WebSite>();
             for (int i = 0; i < nbOfData / nbOfColumns; i++) //As we intialize the variable to 1 instead of 0
             {
+                website = new WebSite();
                 for (int j = 0; j < nbOfColumns; j++)
                 {
-                    // j = i * nbOfColumns;
                     lbl = new Label();
-                    //lbl.Name = "dataLbl" + indexData;
+                    lbl.TextAlign = ContentAlignment.MiddleCenter;
+                    lbl.BorderStyle = BorderStyle.FixedSingle;
+                    lbl.Width = 158;
+                    lbl.Height = 28;
+                    lbl.Location = new Point(x, y); //128, 300
+
                     switch (i)
                     {
                         case 0 :
-                            lbl.Name = "websiteLbl" + index;
+                            lbl.Name = "websiteLbl" + index; //Define label name
                             break;
                         case 1:
                             lbl.Name = "usernameLbl" + index;
@@ -453,21 +473,23 @@ namespace PasswordManager_App
                         }
                         passwordList.Add(data[indexData]); //Add password to password list
                         passwordLblList.Add(lbl); //Add password label to password label list
+                        website.Password = lbl; //Add password to Website constructor
+                        websiteData.Add(website);
                     }
                     else
                     {
+                        lbl.Text = data[indexData];
                         if (j == 0)
                         {
                             websiteLblList.Add(lbl);
+                            website.Name = lbl; //Add website name to Website constructor
                         }
-                        lbl.Text = data[indexData];
+                        else
+                        {
+                            website.Username = lbl; //Add username to Website constructor
+                        }
                     }
 
-                    lbl.TextAlign = ContentAlignment.MiddleCenter;
-                    lbl.BorderStyle = BorderStyle.FixedSingle;
-                    lbl.Width = 158;
-                    lbl.Height = 28;
-                    lbl.Location = new Point(x, y); //128, 300
                     lblList.Add(lbl);
                     PasswordVaultPage.Controls.Add(lbl);
                     indexData ++; //Increase data index
@@ -549,9 +571,7 @@ namespace PasswordManager_App
         }
 
         // Edition of registered password data
-        public void EditPasswordData (string newName, string previousName,
-        string newUsername, string previousUsername,
-        string newPassword, string previousPassword)
+        public void EditPasswordData (string newName, string newUsername, string newPassword)
         {
             if (newName != previousName || newUsername != previousUsername || newPassword != previousPassword)
                 _model.EditPasswordData(newName, previousName, newUsername, newPassword);
@@ -559,35 +579,61 @@ namespace PasswordManager_App
 
         public void EditPasswordData(string currentData)
         {
-            string[] index = Regex.Split(currentData, @"\D+");
-            foreach (string currentIndex in index)
+            string index = currentData.Substring(13, currentData.Length - 13); //Help from 
+            int i = Convert.ToInt32(index);
+
+            previousName = websiteData[i].Name.Text;
+            previousUsername = websiteData[i].Username.Text;
+            previousPassword = websiteData[i].Password.Text;
+            websiteData.Add(website);
+            websiteUpdateData = new List<WebSiteUpdate>();
+
+            for (int j = 0; j < nbOfColumns; j++)
             {
-                int i;
-                if (int.TryParse(currentIndex, out i))
-                {
-                    foreach (Label label in lblList)
-                    {
-                        if (label.Name.Contains(i.ToString())) //Check index 
-                        {
-                            previousName = lbl.Text; //... 
-                            previousUsername = lbl.Text;
-                            previousPassword = lbl.Text;
+                if (j == 0)
+                   lbl = websiteData[i].Name;
+                if (j == 1)
+                    lbl = websiteData[i].Username;
+                if (j == 2)
+                    lbl = websiteData[i].Password;
+               
+                txt = new TextBox();
+                txt.Text = lbl.Text;
+                txt.Location = lbl.Location;
+                txt.Size = lbl.Size;
+                txt.Visible = true;
+                lbl.Visible = false;
+                PasswordVaultPage.Controls.Add(txt); //Add textbox to password vault page
+            }
 
-                            WebSite website = new WebSite();
-                            website.Name = "";
-                            website.Username = "";
-                            website.Password = "";
+            if (updating == false) //Data 
+            { 
+                updating = true; 
+            }
+            else
+            { 
+                ControlUserInput(); 
+                updating = false; 
+            }
+        }
 
-                            lbl = lblList[];
-                            txt = new TextBox();
-                            txt.Text = lbl.Text;
-                            txt.Location = lbl.Location;
-                            txt.Visible = true;
-                            lbl.Visible = false;
-                            PasswordVaultPage.Controls.Add(txt); //Add textbox to password vault page
-                        }
-                    }
-                }
+        public void ControlUserInput()
+        {
+            if (txt != null)
+            {
+                newName = txt.Text;
+                newUsername = txt.Text;
+                newPassword = txt.Text;
+                lbl.Text = txt.Text;
+                newName = lbl.Text;
+                lbl.Visible = true;
+                txt.Visible = false;
+                EditPasswordData(newName, newUsername, newPassword);
+            }
+            else
+            {
+                MessageBox.Show("Un ou plusieurs champs ne sont pas remplis. Veuillez les remplir avant de continuer");
+                updating = false;
             }
         }
 
