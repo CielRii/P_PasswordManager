@@ -167,7 +167,7 @@ namespace PasswordManager_App
                 "WHERE u.user_id =  @userID) AS subquery;";
             int nb = 0;
             cmd = new MySqlCommand(query, Connection);
-            cmd.Parameters.AddWithValue("@userID", 1);
+            cmd.Parameters.AddWithValue("@userID", userID);
             dataReader = cmd.ExecuteReader(); //
             while (dataReader.Read())
             {
@@ -207,17 +207,17 @@ namespace PasswordManager_App
         }
 
         // Edition of registered password data
-        public bool EditPasswordData(string newName, string previousName, string username, string password)
+        public bool EditPasswordData(string newName, string previousName, string newUsername, string newPassword)
         {
             if (!IsConnect()) return false;
 
-            string query = "UPDATE `t_website` SET `name` = @newName && `username` = @username `password` = @password " +
+            string query = "UPDATE `t_website` SET `name` = @newName,`username` = @newUsername, `password` = @newPassword " +
                 "WHERE `name` = @previousName;";
             cmd = new MySqlCommand(query, Connection);
             cmd.Parameters.AddWithValue("@newName", newName);
             cmd.Parameters.AddWithValue("@previousName", previousName);
-            cmd.Parameters.AddWithValue("@username", username);
-            cmd.Parameters.AddWithValue("@password", password);
+            cmd.Parameters.AddWithValue("@newUsername", newUsername);
+            cmd.Parameters.AddWithValue("@newPassword", newPassword);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
             return true;

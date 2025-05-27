@@ -21,11 +21,8 @@ namespace PasswordManager_App
 
         private void PasswordVaultPage_Load(object sender, EventArgs e)
         {
-            Controller.AssignPasswordVaultEvents(showPasswordBtn_Click, updateBtn_Click, deleteBtn_Click); //
-            Controller.DisplayPasswordData();
-
-            //Controller.DisplayButtons();
-            //Controller.DisplayMeansToManagePasswordData();
+            Controller.AssignPasswordVaultEvents(showPasswordBtn_Click, updateBtn_Click, deleteBtn_Click); //Link event methods to object dynamically created
+            Controller.DisplayPasswordData(); //Display data relate to the websites registered
         }
 
         private void optionsBtn_Click(object sender, EventArgs e)
@@ -40,7 +37,7 @@ namespace PasswordManager_App
 
         private void showPasswordBtn_Click(object sender, EventArgs e)
         {
-            if (sender is Button btn)
+            if (sender is Button btn) //Allow us to access the object property
             {
                 Controller.ManagePasswordVisibility(btn.Name); //Manage password visibility according to the index
             }
@@ -48,17 +45,17 @@ namespace PasswordManager_App
 
         private void updateBtn_Click(object sender, EventArgs e)
         {
-            if (sender is Button btn)
+            if (sender is Button btn) //Allow us to access the object property
             {
-                Controller.EditPasswordData(btn.Name);
+                Controller.EditPasswordData(btn.Name); //Edit password data
             }
         }
 
         private void deleteBtn_Click(object sender, EventArgs e)
         {
-            if (sender is PictureBox picture)
+            if (sender is PictureBox picture) //Allow us to access the object property
             {
-                Controller.ErasePasswordData(picture.Name);
+                Controller.ErasePasswordData(picture.Name); //Erase password data
             }
         }
     }

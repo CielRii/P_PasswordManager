@@ -21,8 +21,8 @@ namespace PasswordManager_App
 
         private void HomePage_Load(object sender, EventArgs e)
         {
-            Controller.ShareAppID(); //Share of app identity 
-            passwordInsert.UseSystemPasswordChar = true; //Hide password when typing
+            Controller.ShareAppID(Text, Icon); //Share of app identity 
+            Controller.HidePassword(passwordInsert); //Hide password when typing
         }
 
         private void helpBtn_Click(object sender, EventArgs e)

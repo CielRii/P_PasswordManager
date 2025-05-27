@@ -22,8 +22,8 @@ namespace PasswordManager_App
         private void UserCreationPage_Load(object sender, EventArgs e)
         {
             // Hide passwords when typing
-            newUserPasswordInsert.UseSystemPasswordChar = true;
-            newUserConfirmPasswordInsert.UseSystemPasswordChar = true; 
+            Controller.HidePassword(newUserPasswordInsert);
+            Controller.HidePassword(newUserConfirmPasswordInsert);
         }
 
         private void helpBtn_Click(object sender, EventArgs e)
