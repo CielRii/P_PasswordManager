@@ -21,7 +21,7 @@ namespace PasswordManager_App
 
         private void PasswordVaultPage_Load(object sender, EventArgs e)
         {
-            Controller.AssignPasswordVaultEvents(showPasswordBtn_Click, updateBtn_Click, deleteBtn_Click); //Link event methods to object dynamically created
+            Controller.AssignPasswordVaultEvents(showPasswordBtn_Click, updateBtn_Click, txt_TextChanged, deleteBtn_Click); //Link event methods to object dynamically created
             Controller.DisplayPasswordData(); //Display data relate to the websites registered
         }
 
@@ -48,6 +48,15 @@ namespace PasswordManager_App
             if (sender is Button btn) //Allow us to access the object property
             {
                 Controller.EditPasswordData(btn.Name); //Edit password data
+            }
+        }
+
+        private void txt_TextChanged(object sender, EventArgs e)
+        {
+            if (sender is TextBox txt) //Allow us to access the object property
+            {
+                Controller.EditPasswordData(txt.Name); //Edit password data
+                Controller.CurrentTextBox(txt); //Specify the textBox changing
             }
         }
 

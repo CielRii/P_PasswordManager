@@ -1660,6 +1660,15 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
+      },
+      "PasswordManager-App/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/PasswordManager-App.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/PasswordManager-App.dll": {}
+        }
       }
     }
   },
@@ -6128,6 +6137,11 @@
         "system.xml.xdocument.4.3.0.nupkg.sha512",
         "system.xml.xdocument.nuspec"
       ]
+    },
+    "PasswordManager-App/1.0.0": {
+      "type": "project",
+      "path": "../PasswordManager-App/PasswordManager-App.csproj",
+      "msbuildProject": "../PasswordManager-App/PasswordManager-App.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -6135,6 +6149,7 @@
       "MSTest.TestAdapter >= 2.2.8",
       "MSTest.TestFramework >= 2.2.8",
       "Microsoft.NET.Test.Sdk >= 17.1.0",
+      "PasswordManager-App >= 1.0.0",
       "coverlet.collector >= 3.1.2"
     ]
   },
@@ -6168,7 +6183,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\sardongmo\\Desktop\\P_PasswordManager\\src\\PasswordManager-App\\PasswordManager-App\\PasswordManager-App.csproj": {
+              "projectPath": "C:\\Users\\sardongmo\\Desktop\\P_PasswordManager\\src\\PasswordManager-App\\PasswordManager-App\\PasswordManager-App.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

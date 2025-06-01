@@ -30,7 +30,11 @@
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\sardongmo\\Desktop\\P_PasswordManager\\src\\PasswordManager-App\\PasswordManager-App\\PasswordManager-App.csproj": {
+                "projectPath": "C:\\Users\\sardongmo\\Desktop\\P_PasswordManager\\src\\PasswordManager-App\\PasswordManager-App\\PasswordManager-App.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -77,6 +81,21 @@
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
         }
+      }
+    },
+    "C:\\Users\\sardongmo\\Desktop\\P_PasswordManager\\src\\PasswordManager-App\\PasswordManager-App\\PasswordManager-App.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\sardongmo\\Desktop\\P_PasswordManager\\src\\PasswordManager-App\\PasswordManager-App\\PasswordManager-App.csproj",
+        "projectName": "PasswordManager-App",
+        "projectPath": "C:\\Users\\sardongmo\\Desktop\\P_PasswordManager\\src\\PasswordManager-App\\PasswordManager-App\\PasswordManager-App.csproj",
+        "frameworks": {
+          "net472": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {}
       }
     }
   }

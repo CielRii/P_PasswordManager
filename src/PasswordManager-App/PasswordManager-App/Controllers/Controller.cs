@@ -97,6 +97,9 @@ namespace PasswordManager_App
             public TextBox Password { get; set; }
         }
 
+        public Controller()
+        { }
+
         public Controller(Model model, HomePage home)
         {
             _model = model; //Initialization of the model
@@ -115,13 +118,15 @@ namespace PasswordManager_App
         // Event methods
         private EventHandler showPasswordBtn_Click { get; set; }
         private EventHandler updateBtn_Click { get; set; }
+        private EventHandler txt_TextChanged { get; set; }
         private EventHandler deleteBtn_Click { get; set; }
 
         // Assign event methods for password vault automatically saltCreated elements
-        public void AssignPasswordVaultEvents(EventHandler showPasswordBtn, EventHandler updateBtn, EventHandler deleteBtn)
+        public void AssignPasswordVaultEvents(EventHandler showPasswordBtn, EventHandler updateBtn, EventHandler txtChanged, EventHandler deleteBtn)
         {
             showPasswordBtn_Click = showPasswordBtn;
             updateBtn_Click = updateBtn;
+            txt_TextChanged = txtChanged;
             deleteBtn_Click = deleteBtn;
         }
 
@@ -598,7 +603,7 @@ namespace PasswordManager_App
         //public bool EditPasswordData(string newName, string previousName, string newUsername, string newPassword)
         public void EditPasswordData(string currentData)
         {
-            string index = currentData.Substring(13, currentData.Length - 13); //Help from 
+            string index = currentData.Substring(13, currentData.Length - 13); //Help from //
             int i = Convert.ToInt32(index);
 
             previousName = websiteData[i].Name.Text;
@@ -621,6 +626,7 @@ namespace PasswordManager_App
                 txt.Text = lbl.Text;
                 txt.Location = lbl.Location;
                 txt.Size = lbl.Size;
+                txt.Click += new EventHandler(txt_TextChanged); //Add of an event to handle further operations
                 txt.Visible = true;
                 lbl.Visible = false;
                 txtList.Add(txt);
@@ -647,25 +653,26 @@ namespace PasswordManager_App
                 {
                     if (j == 0)
                     {
-                        txtList[j] = txt;
                         txt = txtList[j]; //
                         newName = txt.Text;
-                        lbl = websiteData[i].Name; //
+                        lbl.Text = newName;
+                        websiteData[i].Name = lbl; //
                     }
                     if (j == 1)
                     {
                         txt = txtList[j];
                         newUsername = txt.Text;
-                        lbl = websiteData[i].Username;
+                        lbl.Text = newUsername;
+                        websiteData[i].Username = lbl;
                     }
                     if (j == 2)
                     {
                         txt = txtList[j];
                         newPassword = txt.Text;
-                        lbl = websiteData[i].Password;
+                        lbl.Text = newPassword;
+                        websiteData[i].Password = lbl;
                     }
-
-                    lbl.Text = newName;
+                    // Change element visible
                     lbl.Visible = true;
                     txt.Visible = false;
                 }
@@ -676,6 +683,11 @@ namespace PasswordManager_App
                 MessageBox.Show("Un ou plusieurs champs ne sont pas remplis. Veuillez les remplir avant de continuer");
                 updating = true;
             }
+        }
+
+        public void CurrentTextBox(TextBox txt)
+        {
+            this.txt = txt;
         }
 
         // Deletion of registered password data
